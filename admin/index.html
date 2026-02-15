@@ -501,6 +501,162 @@
     .feed-time { color: var(--text3); white-space: nowrap; min-width: 60px; }
     .feed-event { color: var(--text2); }
     .feed-event strong { color: var(--text); font-weight: 500; }
+
+    /* ── Alert Banners ── */
+    .alert-banner {
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      animation: slideDown 0.3s ease-out;
+      position: relative;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .alert-banner.critical {
+      background: rgba(207, 102, 121, 0.15);
+      border: 1px solid var(--red);
+      animation: slideDown 0.3s ease-out, pulse 2s infinite;
+    }
+
+    .alert-banner.warning {
+      background: rgba(255, 193, 7, 0.15);
+      border: 1px solid var(--yellow);
+    }
+
+    .alert-banner.success {
+      background: rgba(76, 175, 80, 0.15);
+      border: 1px solid var(--green);
+    }
+
+    .alert-banner.info {
+      background: rgba(33, 150, 243, 0.15);
+      border: 1px solid var(--blue);
+    }
+
+    .alert-icon {
+      font-size: 24px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .alert-content {
+      flex: 1;
+    }
+
+    .alert-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alert-banner.critical .alert-title { color: var(--red); }
+    .alert-banner.warning .alert-title { color: var(--yellow); }
+    .alert-banner.success .alert-title { color: var(--green); }
+    .alert-banner.info .alert-title { color: var(--blue); }
+
+    .alert-message {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .alert-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .alert-action-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+    }
+
+    .alert-action-btn:hover { opacity: 0.8; }
+
+    .alert-action-btn.primary {
+      background: var(--green);
+      color: white;
+    }
+
+    .alert-action-btn.secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .alert-dismiss {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text3);
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px 8px;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .alert-dismiss:hover { color: var(--text); }
+
+    .alert-metric {
+      display: inline-block;
+      padding: 2px 6px;
+      background: var(--surface);
+      border-radius: 4px;
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 0 2px;
+    }
+
+    .alert-banner.critical .alert-metric { color: var(--red); }
+    .alert-banner.warning .alert-metric { color: var(--yellow); }
+    .alert-banner.success .alert-metric { color: var(--green); }
+
+    .trend-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .trend-badge.down {
+      background: rgba(207, 102, 121, 0.2);
+      color: var(--red);
+    }
+
+    .trend-badge.up {
+      background: rgba(76, 175, 80, 0.2);
+      color: var(--green);
+    }
   </style>
 </head>
 <body>
@@ -781,6 +937,9 @@
 
       <!-- ═══ TAB: 사업방향 WBS ═══ -->
       <div class="tab-content" id="tab-wbs">
+
+        <!-- 경고 시스템 영역 -->
+        <div id="wbs-alerts-container"></div>
 
         <!-- 실시간 전략 대시보드 -->
         <div class="section-card">
@@ -1101,6 +1260,45 @@
                 <strong>손익 분기:</strong> M8 (4월) 달성 예상 (고정비용 ₩88,000/월)<br>
                 <strong>6월 순수익:</strong> ₩122,500 - ₩88,000 = <span style="color: var(--green); font-weight: 700;">₩34,500/월</span>
               </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 사용자 행동 인사이트 -->
+        <div class="section-card" style="margin-top: 16px;">
+          <div class="section-header">
+            <span class="section-title">🔍 사용자 행동 인사이트</span>
+          </div>
+          <div class="section-body">
+            <div style="display: grid; gap: 16px;">
+
+              <!-- 가장 많이 사용하는 기능 TOP 5 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">📊 가장 많이 사용하는 기능 TOP 5</h3>
+                <div style="color: var(--text3); font-size: 12px; margin-bottom: 12px;">최근 30일 기준, analytics_events 집계</div>
+                <div id="wbs-top-features">
+                  <div class="loading-overlay"><div class="spinner"></div></div>
+                </div>
+              </div>
+
+              <!-- 이탈이 많은 화면 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">⚠️ 이탈이 많은 화면</h3>
+                <div style="color: var(--text3); font-size: 12px; margin-bottom: 12px;">짧은 체류 시간 = 사용자가 빠르게 이탈</div>
+                <div id="wbs-drop-off-screens">
+                  <div class="loading-overlay"><div class="spinner"></div></div>
+                </div>
+              </div>
+
+              <!-- 리텐션에 영향을 주는 행동 패턴 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">💡 리텐션에 영향을 주는 행동 패턴</h3>
+                <div style="color: var(--text3); font-size: 12px; margin-bottom: 12px;">높은 리텐션 사용자 vs 낮은 리텐션 사용자 비교</div>
+                <div id="wbs-retention-patterns">
+                  <div class="loading-overlay"><div class="spinner"></div></div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -2310,6 +2508,189 @@
 
         // 추세 그래프 렌더링
         renderTrendChart(currentMAU, targetMAU);
+
+        // 경고 시스템 렌더링
+        renderAlertBanners({
+          d7Retention,
+          targetRetention,
+          currentMAU,
+          targetMAU,
+          mauProgress,
+          conversionRate,
+          targetConversion,
+          growthRate,
+          daysFromLaunch,
+          achievementProb
+        });
+
+        // ══════════════════════════════════════════════════════════════
+        // 사용자 행동 인사이트 분석
+        // ══════════════════════════════════════════════════════════════
+
+        // 1. 가장 많이 사용하는 기능 TOP 5
+        const eventCounts = {};
+        (recentEvents || []).forEach(e => {
+          if (e.event_name) {
+            eventCounts[e.event_name] = (eventCounts[e.event_name] || 0) + 1;
+          }
+        });
+
+        const topFeatures = Object.entries(eventCounts)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5);
+
+        const maxCount = topFeatures.length > 0 ? topFeatures[0][1] : 1;
+
+        document.getElementById('wbs-top-features').innerHTML = topFeatures.length > 0 ? `
+          ${topFeatures.map(([name, count]) => {
+            const percentage = ((count / maxCount) * 100).toFixed(1);
+            return `
+              <div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="color: var(--text); font-size: 13px; font-weight: 600;">${name}</span>
+                  <span style="color: var(--text2); font-size: 13px;">${count.toLocaleString()}회</span>
+                </div>
+                <div style="background: var(--bg); height: 24px; border-radius: 4px; overflow: hidden; position: relative;">
+                  <div style="background: linear-gradient(90deg, var(--green), var(--blue)); height: 100%; width: ${percentage}%; transition: width 0.3s;"></div>
+                  <div style="position: absolute; top: 50%; left: 8px; transform: translateY(-50%); color: ${percentage > 50 ? 'white' : 'var(--text)'}; font-size: 11px; font-weight: 600;">${percentage}%</div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        ` : '<div style="color: var(--text3); font-size: 13px; padding: 12px; text-align: center;">데이터 부족</div>';
+
+        // 2. 이탈이 많은 화면 (screen_view 이벤트 중 짧은 체류)
+        const screenViews = (recentEvents || []).filter(e => e.event_name === 'screen_view');
+        const screenStats = {};
+
+        screenViews.forEach((view, idx) => {
+          const screenName = view.screen_name || '알 수 없음';
+          if (!screenStats[screenName]) {
+            screenStats[screenName] = { count: 0, totalDuration: 0 };
+          }
+          screenStats[screenName].count++;
+
+          // 다음 이벤트와의 시간 차이로 체류 시간 추정 (간단 버전)
+          if (idx < screenViews.length - 1 && screenViews[idx + 1].user_id === view.user_id) {
+            const duration = (new Date(screenViews[idx + 1].created_at) - new Date(view.created_at)) / 1000;
+            if (duration > 0 && duration < 600) { // 10분 이내만 유효
+              screenStats[screenName].totalDuration += duration;
+            }
+          }
+        });
+
+        const dropOffScreens = Object.entries(screenStats)
+          .map(([name, stats]) => ({
+            name,
+            count: stats.count,
+            avgDuration: stats.totalDuration / stats.count
+          }))
+          .filter(s => s.count >= 5) // 최소 5회 이상
+          .sort((a, b) => a.avgDuration - b.avgDuration)
+          .slice(0, 5);
+
+        document.getElementById('wbs-drop-off-screens').innerHTML = dropOffScreens.length > 0 ? `
+          <div style="display: grid; gap: 8px;">
+            ${dropOffScreens.map((screen, idx) => `
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg); border-radius: 4px; border-left: 3px solid ${idx === 0 ? 'var(--red)' : 'var(--yellow)'};">
+                <div>
+                  <div style="color: var(--text); font-size: 13px; font-weight: 600;">${screen.name}</div>
+                  <div style="color: var(--text3); font-size: 11px;">방문 ${screen.count}회</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="color: ${idx === 0 ? 'var(--red)' : 'var(--yellow)'}; font-size: 14px; font-weight: 700;">${screen.avgDuration.toFixed(1)}초</div>
+                  <div style="color: var(--text3); font-size: 11px;">평균 체류</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : '<div style="color: var(--text3); font-size: 13px; padding: 12px; text-align: center;">데이터 부족</div>';
+
+        // 3. 리텐션에 영향을 주는 행동 패턴
+        // 높은 리텐션 사용자 vs 낮은 리텐션 사용자의 이벤트 비교
+        const userEventCounts = {};
+        (recentEvents || []).forEach(e => {
+          if (!userEventCounts[e.user_id]) {
+            userEventCounts[e.user_id] = {};
+          }
+          userEventCounts[e.user_id][e.event_name] = (userEventCounts[e.user_id][e.event_name] || 0) + 1;
+        });
+
+        // 활성 사용자 판별 (최근 7일 내 5회 이상 이벤트)
+        const activeUsers = Object.entries(userEventCounts)
+          .filter(([userId, events]) => {
+            const totalEvents = Object.values(events).reduce((sum, count) => sum + count, 0);
+            return totalEvents >= 5;
+          })
+          .map(([userId]) => userId);
+
+        const inactiveUsers = Object.keys(userEventCounts).filter(u => !activeUsers.includes(u));
+
+        // 활성/비활성 사용자별 이벤트 집계
+        const activeEventCounts = {};
+        const inactiveEventCounts = {};
+
+        activeUsers.forEach(userId => {
+          Object.entries(userEventCounts[userId]).forEach(([event, count]) => {
+            activeEventCounts[event] = (activeEventCounts[event] || 0) + count;
+          });
+        });
+
+        inactiveUsers.forEach(userId => {
+          Object.entries(userEventCounts[userId]).forEach(([event, count]) => {
+            inactiveEventCounts[event] = (inactiveEventCounts[event] || 0) + count;
+          });
+        });
+
+        // 활성 사용자가 더 많이 하는 행동 찾기
+        const retentionPatterns = Object.keys(activeEventCounts)
+          .map(event => {
+            const activeAvg = activeEventCounts[event] / Math.max(activeUsers.length, 1);
+            const inactiveAvg = (inactiveEventCounts[event] || 0) / Math.max(inactiveUsers.length, 1);
+            const diff = activeAvg - inactiveAvg;
+            const diffPercentage = inactiveAvg > 0 ? ((diff / inactiveAvg) * 100) : 999;
+
+            return {
+              event,
+              activeAvg,
+              inactiveAvg,
+              diff,
+              diffPercentage
+            };
+          })
+          .filter(p => p.diff > 0)
+          .sort((a, b) => b.diffPercentage - a.diffPercentage)
+          .slice(0, 5);
+
+        document.getElementById('wbs-retention-patterns').innerHTML = retentionPatterns.length > 0 ? `
+          <div style="margin-bottom: 12px; padding: 12px; background: var(--bg); border-radius: 4px; border-left: 3px solid var(--green);">
+            <div style="display: flex; gap: 16px;">
+              <div style="flex: 1; text-align: center;">
+                <div style="color: var(--green); font-size: 20px; font-weight: 700;">${activeUsers.length}</div>
+                <div style="color: var(--text3); font-size: 11px;">높은 리텐션 사용자</div>
+              </div>
+              <div style="flex: 1; text-align: center;">
+                <div style="color: var(--red); font-size: 20px; font-weight: 700;">${inactiveUsers.length}</div>
+                <div style="color: var(--text3); font-size: 11px;">낮은 리텐션 사용자</div>
+              </div>
+            </div>
+          </div>
+          <div style="color: var(--text2); font-size: 12px; margin-bottom: 12px; font-weight: 600;">높은 리텐션 사용자가 더 많이 하는 행동:</div>
+          <div style="display: grid; gap: 8px;">
+            ${retentionPatterns.map(pattern => `
+              <div style="padding: 8px; background: var(--bg); border-radius: 4px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="color: var(--text); font-size: 13px; font-weight: 600;">${pattern.event}</span>
+                  <span style="color: var(--green); font-size: 12px; font-weight: 700;">+${pattern.diffPercentage.toFixed(0)}%</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text3);">
+                  <span>높은 리텐션: ${pattern.activeAvg.toFixed(1)}회/인</span>
+                  <span>낮은 리텐션: ${pattern.inactiveAvg.toFixed(1)}회/인</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : '<div style="color: var(--text3); font-size: 13px; padding: 12px; text-align: center;">데이터 부족</div>';
 
       } catch (err) {
         console.error('[WBS]', err);
