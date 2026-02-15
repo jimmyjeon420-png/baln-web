@@ -782,6 +782,25 @@
       <!-- ═══ TAB: 사업방향 WBS ═══ -->
       <div class="tab-content" id="tab-wbs">
 
+        <!-- 실시간 전략 대시보드 -->
+        <div class="section-card">
+          <div class="section-header">
+            <span class="section-title">📊 실시간 전략 대시보드</span>
+            <button class="refresh-btn" onclick="loadWBS()" style="margin-left:auto;">↻ 새로고침</button>
+          </div>
+          <div class="section-body">
+            <!-- 현황 KPI -->
+            <div class="metrics-grid" id="wbs-live-kpis" style="margin-bottom: 24px;">
+              <div class="loading-overlay"><div class="spinner"></div> 데이터 로딩 중...</div>
+            </div>
+
+            <!-- AI 의사결정 지원 -->
+            <div id="wbs-ai-decisions">
+              <div class="loading-overlay"><div class="spinner"></div></div>
+            </div>
+          </div>
+        </div>
+
         <!-- 1차 GOAL -->
         <div class="section-card">
           <div class="section-header">
@@ -1287,6 +1306,7 @@
         case 'content': loadContent(); break;
         case 'analytics': loadEnhancedAnalytics(); break;
         case 'eventlog': loadEventLog(); break;
+        case 'wbs': loadWBS(); break;
       }
     }
 
@@ -2141,6 +2161,151 @@
           </tr>
         `).join('') || '<tr><td colspan="4"><div class="empty-state"><p>이벤트가 없습니다</p></div></td></tr>';
       } catch (err) { console.error('[EventLog]', err); }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // WBS / STRATEGY DASHBOARD
+    // ══════════════════════════════════════════════════════════════
+
+    async function loadWBS() {
+      try {
+        // 데이터 수집
+        const now = new Date();
+        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
+        const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+        const [
+          { count: totalUsers },
+          { count: premiumUsers },
+          { data: recentSignups },
+          { data: recentEvents },
+        ] = await Promise.all([
+          sb.from('profiles').select('*', { count: 'exact', head: true }),
+          sb.from('profiles').select('*', { count: 'exact', head: true }).neq('plan_type', 'free').not('plan_type', 'is', null),
+          sb.from('profiles').select('created_at').order('created_at', { ascending: false}).limit(1000),
+          sb.from('analytics_events').select('created_at, user_id, event_name').order('created_at', { ascending: false }).limit(5000),
+        ]);
+
+        // KPI 계산
+        const currentMAU = totalUsers || 0;
+        const targetMAU = 500; // 6월 목표
+        const mauProgress = Math.min(100, (currentMAU / targetMAU * 100)).toFixed(1);
+
+        const conversionRate = totalUsers > 0 ? ((premiumUsers || 0) / totalUsers * 100).toFixed(1) : 0;
+        const targetConversion = 5; // 목표 5%
+        const convProgress = Math.min(100, (conversionRate / targetConversion * 100)).toFixed(1);
+
+        // D7 리텐션 계산 (간단 버전)
+        const weekAgoSignups = (recentSignups || []).filter(u => new Date(u.created_at) < new Date(weekAgo)).length;
+        const activeLastWeek = new Set((recentEvents || []).filter(e => new Date(e.created_at) >= new Date(weekAgo)).map(e => e.user_id)).size;
+        const d7Retention = weekAgoSignups > 0 ? (activeLastWeek / weekAgoSignups * 100).toFixed(1) : 0;
+        const targetRetention = 40; // 목표 40%
+        const retentionProgress = Math.min(100, (d7Retention / targetRetention * 100)).toFixed(1);
+
+        // MRR 계산 (Premium 유저 * 4900원)
+        const currentMRR = (premiumUsers || 0) * 4900;
+        const targetMRR = 122500; // 6월 목표
+        const mrrProgress = Math.min(100, (currentMRR / targetMRR * 100)).toFixed(1);
+
+        // HTML 렌더링
+        document.getElementById('wbs-live-kpis').innerHTML = `
+          <div class="metric-card">
+            <div class="metric-label">현재 MAU</div>
+            <div class="metric-value green">${currentMAU.toLocaleString()}</div>
+            <div class="metric-sub">목표: ${targetMAU}명 (${mauProgress}%)</div>
+            <div style="background:var(--surface2);height:8px;border-radius:4px;overflow:hidden;margin-top:8px;">
+              <div style="background:var(--green);height:100%;width:${mauProgress}%;transition:width 0.3s;"></div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">D7 리텐션</div>
+            <div class="metric-value ${d7Retention >= targetRetention ? 'green' : 'yellow'}">${d7Retention}%</div>
+            <div class="metric-sub">목표: ${targetRetention}% (${retentionProgress}%)</div>
+            <div style="background:var(--surface2);height:8px;border-radius:4px;overflow:hidden;margin-top:8px;">
+              <div style="background:${d7Retention >= targetRetention ? 'var(--green)' : 'var(--yellow)'};height:100%;width:${retentionProgress}%;transition:width 0.3s;"></div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">유료 전환율</div>
+            <div class="metric-value ${conversionRate >= targetConversion ? 'green' : 'yellow'}">${conversionRate}%</div>
+            <div class="metric-sub">목표: ${targetConversion}% (${convProgress}%)</div>
+            <div style="background:var(--surface2);height:8px;border-radius:4px;overflow:hidden;margin-top:8px;">
+              <div style="background:${conversionRate >= targetConversion ? 'var(--green)' : 'var(--yellow)'};height:100%;width:${convProgress}%;transition:width 0.3s;"></div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">현재 MRR</div>
+            <div class="metric-value blue">₩${currentMRR.toLocaleString()}</div>
+            <div class="metric-sub">목표: ₩${targetMRR.toLocaleString()} (${mrrProgress}%)</div>
+            <div style="background:var(--surface2);height:8px;border-radius:4px;overflow:hidden;margin-top:8px;">
+              <div style="background:var(--blue);height:100%;width:${mrrProgress}%;transition:width 0.3s;"></div>
+            </div>
+          </div>
+        `;
+
+        // 의사결정 AI 추천
+        const recommendations = [];
+        const warnings = [];
+
+        // 집중 과제 추천
+        if (d7Retention < targetRetention) {
+          recommendations.push('📌 <strong>리텐션 개선</strong>: D7 리텐션이 목표 미달. Phase 10 알림 시스템 집중');
+        }
+        if (conversionRate < targetConversion) {
+          recommendations.push('📌 <strong>전환율 최적화</strong>: Premium 페이월 및 가치 비교 화면 개선 필요');
+        }
+        if (currentMAU < targetMAU * 0.5) {
+          recommendations.push('📌 <strong>사용자 확보</strong>: Phase 11 바이럴 루프 및 공유 기능 우선 구현');
+        }
+
+        // 경고 지표
+        if (d7Retention < 30) {
+          warnings.push('⚠️ <strong>리텐션 위험</strong>: D7 리텐션 30% 미만. 즉시 개선 필요!');
+        }
+        if (currentMAU < 50 && new Date().getMonth() >= 1) {
+          warnings.push('⚠️ <strong>MAU 성장 지연</strong>: 6월 목표 달성 가능성 낮음. 가속 필요');
+        }
+
+        // 6월 목표 달성 예측
+        const daysFromLaunch = Math.floor((now - new Date('2026-03-01')) / (24 * 60 * 60 * 1000)) + 1;
+        const growthRate = daysFromLaunch > 0 ? currentMAU / daysFromLaunch : 0;
+        const daysUntilJune = Math.floor((new Date('2026-06-30') - now) / (24 * 60 * 60 * 1000));
+        const predictedMAU = Math.round(currentMAU + (growthRate * daysUntilJune));
+        const achievementProb = Math.min(100, (predictedMAU / targetMAU * 100)).toFixed(0);
+
+        document.getElementById('wbs-ai-decisions').innerHTML = `
+          <div style="background: ${warnings.length > 0 ? 'rgba(207,102,121,0.1)' : 'var(--surface2)'}; padding: 16px; border-radius: 8px; border-left: 3px solid ${warnings.length > 0 ? 'var(--red)' : 'var(--green)'};">
+            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">🎯 이번 주 집중 과제</h3>
+            ${recommendations.length > 0 ? recommendations.map(r => `<div style="color: var(--text2); font-size: 13px; margin-bottom: 8px; line-height: 1.6;">${r}</div>`).join('') : '<div style="color: var(--text3); font-size: 13px;">모든 지표가 목표 달성 중입니다! 🎉</div>'}
+          </div>
+
+          ${warnings.length > 0 ? `
+          <div style="background: rgba(207,102,121,0.15); padding: 16px; border-radius: 8px; border-left: 3px solid var(--red); margin-top: 16px;">
+            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--red);">⚠️ 주의 필요 지표</h3>
+            ${warnings.map(w => `<div style="color: var(--text2); font-size: 13px; margin-bottom: 8px; line-height: 1.6;">${w}</div>`).join('')}
+          </div>
+          ` : ''}
+
+          <div style="background: var(--surface2); padding: 16px; border-radius: 8px; margin-top: 16px;">
+            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">📈 6월 목표 달성 예측</h3>
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div style="flex: 1;">
+                <div style="font-size: 36px; font-weight: 700; color: ${achievementProb >= 80 ? 'var(--green)' : achievementProb >= 50 ? 'var(--yellow)' : 'var(--red)'};">${achievementProb}%</div>
+                <div style="color: var(--text3); font-size: 12px; margin-top: 4px;">현재 추세 기준 달성 가능성</div>
+              </div>
+              <div style="flex: 2; color: var(--text2); font-size: 13px; line-height: 1.6;">
+                <strong>예측 MAU:</strong> ${predictedMAU.toLocaleString()}명<br>
+                <strong>필요 성장률:</strong> ${growthRate.toFixed(1)}명/일 → ${(targetMAU / daysUntilJune).toFixed(1)}명/일<br>
+                <strong>남은 기간:</strong> ${daysUntilJune}일
+              </div>
+            </div>
+          </div>
+        `;
+
+      } catch (err) {
+        console.error('[WBS]', err);
+        document.getElementById('wbs-live-kpis').innerHTML = `<div class="empty-state"><p>데이터 로딩 실패: ${err.message}</p></div>`;
+      }
     }
 
     // ══════════════════════════════════════════════════════════════
