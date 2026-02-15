@@ -384,6 +384,123 @@
       font-size: 11px;
       color: var(--text3);
     }
+
+    /* ── Delta Indicator ── */
+    .metric-delta { font-size: 12px; margin-top: 4px; font-weight: 600; }
+    .metric-delta.up { color: var(--green); }
+    .metric-delta.down { color: var(--red); }
+    .metric-delta.flat { color: var(--text3); }
+
+    /* ── Filter Chips ── */
+    .filter-chips { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .filter-chip {
+      padding: 6px 14px; border-radius: 20px; background: var(--surface2);
+      border: 1px solid var(--border); color: var(--text2); font-size: 13px;
+      cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+    }
+    .filter-chip.active { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+    .filter-chip:hover:not(.active) { border-color: var(--text3); }
+    .count-badge { background: var(--surface); padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: 600; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7); z-index: 1000; display: flex;
+      align-items: center; justify-content: center; padding: 20px;
+      opacity: 0; visibility: hidden; transition: all 0.2s;
+    }
+    .modal-overlay.visible { opacity: 1; visibility: visible; }
+    .modal-card {
+      background: var(--surface); border-radius: 16px; border: 1px solid var(--border);
+      width: 100%; max-width: 640px; max-height: 80vh; overflow-y: auto;
+    }
+    .modal-header {
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; background: var(--surface); z-index: 1;
+    }
+    .modal-header h3 { font-size: 18px; }
+    .modal-close { background: none; border: none; color: var(--text2); font-size: 24px; cursor: pointer; padding: 4px 8px; }
+    .modal-close:hover { color: var(--text); }
+    .modal-body { padding: 24px; }
+    .modal-section { margin-bottom: 20px; }
+    .modal-section-title { font-size: 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+
+    /* ── Segment Control ── */
+    .segment-control { display: inline-flex; background: var(--surface2); border-radius: 10px; padding: 3px; margin-bottom: 16px; }
+    .segment-btn { padding: 8px 20px; border-radius: 8px; border: none; background: transparent; color: var(--text2); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+    .segment-btn.active { background: var(--green-dim); color: var(--green); }
+
+    /* ── Summary Banner ── */
+    .summary-banner { background: var(--surface2); border-radius: 10px; padding: 12px 20px; margin-bottom: 16px; display: flex; gap: 24px; font-size: 13px; color: var(--text2); }
+    .summary-banner strong { color: var(--text); }
+
+    /* ── Status Dot ── */
+    .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+    .status-dot.green { background: var(--green); }
+    .status-dot.yellow { background: var(--yellow); }
+    .status-dot.gray { background: var(--text3); }
+    .status-dot.red { background: var(--red); }
+
+    /* ── Retention Bars ── */
+    .retention-bar { margin-bottom: 16px; }
+    .retention-bar label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+    .retention-bar label span:first-child { color: var(--text2); }
+    .retention-bar label span:last-child { font-weight: 600; }
+    .retention-track { height: 28px; background: var(--surface2); border-radius: 6px; overflow: hidden; }
+    .retention-fill { height: 100%; border-radius: 6px; transition: width 0.6s; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font-size: 11px; font-weight: 600; color: white; min-width: 36px; }
+
+    /* ── Post Card ── */
+    .post-card { background: var(--surface2); border-radius: 10px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border); }
+    .post-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .post-card-meta { font-size: 12px; color: var(--text3); }
+    .post-card-content { font-size: 14px; color: var(--text); margin-bottom: 12px; line-height: 1.5; }
+    .post-card-content.collapsed { max-height: 60px; overflow: hidden; }
+    .post-actions { display: flex; gap: 8px; }
+
+    /* ── Action Buttons ── */
+    .action-btn { padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text2); transition: all 0.2s; }
+    .action-btn:hover { border-color: var(--text3); color: var(--text); }
+    .action-btn.danger { border-color: rgba(207,102,121,0.3); color: var(--red); }
+    .action-btn.danger:hover { background: rgba(207,102,121,0.1); }
+    .action-btn.success { border-color: rgba(76,175,80,0.3); color: var(--green); }
+    .action-btn.success:hover { background: rgba(76,175,80,0.1); }
+    .action-btn.primary { background: var(--green); color: white; border-color: var(--green); }
+    .action-btn.primary:hover { opacity: 0.9; }
+
+    /* ── Urgent Badge ── */
+    .urgent-badge { display: inline-block; background: rgba(207,102,121,0.2); color: var(--red); font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+
+    /* ── Clickable Row ── */
+    .data-table tr.clickable { cursor: pointer; }
+    .data-table tr.clickable:hover td { background: rgba(76,175,80,0.08); }
+
+    /* ── Bulk Action Bar ── */
+    .bulk-action-bar { position: sticky; bottom: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .bulk-action-bar.hidden { display: none; }
+
+    /* ── Modal Form ── */
+    .modal-input { width: 100%; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; outline: none; margin-bottom: 8px; }
+    .modal-input:focus { border-color: var(--green); }
+    .modal-textarea { width: 100%; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; outline: none; resize: vertical; min-height: 60px; margin-bottom: 8px; }
+    .modal-textarea:focus { border-color: var(--green); }
+
+    /* ── Info Grid ── */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .info-label { font-size: 11px; color: var(--text3); margin-bottom: 2px; }
+    .info-value { font-size: 14px; font-weight: 500; }
+
+    /* ── Checkbox ── */
+    .checkbox-cell { width: 40px; text-align: center; }
+    .checkbox-cell input { accent-color: var(--green); }
+
+    /* ── Activity Feed ── */
+    .feed-group { margin-bottom: 16px; }
+    .feed-group-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+    .feed-item { display: flex; gap: 10px; padding: 6px 0; font-size: 13px; }
+    .feed-time { color: var(--text3); white-space: nowrap; min-width: 60px; }
+    .feed-event { color: var(--text2); }
+    .feed-event strong { color: var(--text); font-weight: 500; }
   </style>
 </head>
 <body>
@@ -393,16 +510,14 @@
   <!-- ═══════════════════════════════════════════════════════════ -->
   <div id="login-screen">
     <div class="login-card">
-      <h1 style="font-size:28px; margin-bottom:4px;">baln</h1>
-      <p style="color:var(--green); font-weight:600; font-size:13px; margin-bottom:4px;">Admin Dashboard</p>
-      <p>관리자 계정으로 로그인하세요</p>
-      <button onclick="handleGoogleLogin()" id="login-btn" style="display:flex; align-items:center; justify-content:center; gap:10px;">
-        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-        Google로 로그인
-      </button>
+      <h1>baln Admin</h1>
+      <p>관리자 대시보드에 접속합니다</p>
+      <input type="url" id="supabase-url" placeholder="Supabase URL (https://xxx.supabase.co)" />
+      <input type="password" id="service-key" placeholder="Service Role Key" />
+      <button onclick="handleLogin()" id="login-btn">로그인</button>
       <p class="login-error" id="login-error"></p>
-      <p style="margin-top:20px; font-size:11px; color:var(--text3);">
-        승인된 관리자만 접속할 수 있습니다
+      <p style="margin-top:16px; font-size:11px; color:var(--text3);">
+        Supabase Dashboard &gt; Settings &gt; API 에서<br/>service_role key를 복사하세요
       </p>
     </div>
   </div>
@@ -431,9 +546,13 @@
       <button class="tab-btn active" data-tab="overview">Overview</button>
       <button class="tab-btn" data-tab="users">유저 관리</button>
       <button class="tab-btn" data-tab="credits">크레딧 경제</button>
+      <button class="tab-btn" data-tab="reports">신고 관리</button>
+      <button class="tab-btn" data-tab="lounge">라운지 관리</button>
       <button class="tab-btn" data-tab="engagement">인게이지먼트</button>
       <button class="tab-btn" data-tab="content">콘텐츠</button>
-      <button class="tab-btn" data-tab="analytics">이벤트 로그</button>
+      <button class="tab-btn" data-tab="analytics">분석</button>
+      <button class="tab-btn" data-tab="eventlog">이벤트 로그</button>
+      <button class="tab-btn" data-tab="wbs">📊 사업방향 WBS</button>
     </div>
 
     <div class="content">
@@ -461,6 +580,12 @@
         <div class="search-box">
           <input type="text" id="user-search" placeholder="이메일 또는 ID로 검색..." oninput="searchUsers(this.value)" />
         </div>
+        <div class="filter-chips" id="user-sort-chips">
+          <button class="filter-chip active" data-sort="recent">최근활동순</button>
+          <button class="filter-chip" data-sort="assets">자산순</button>
+          <button class="filter-chip" data-sort="credits">크레딧순</button>
+          <button class="filter-chip" data-sort="created">가입일순</button>
+        </div>
         <div class="section-card">
           <div class="section-header">
             <span class="section-title">전체 유저 (<span id="user-count">0</span>명)</span>
@@ -469,6 +594,7 @@
             <table class="data-table" id="users-table">
               <thead>
                 <tr>
+                  <th>상태</th>
                   <th>가입일</th>
                   <th>이메일</th>
                   <th>플랜</th>
@@ -505,6 +631,58 @@
               </thead>
               <tbody id="credits-tbody"></tbody>
             </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB: REPORTS ═══ -->
+      <div class="tab-content" id="tab-reports">
+        <div class="filter-chips" id="report-filters">
+          <button class="filter-chip active" data-filter="all">전체 <span class="count-badge" id="report-count-all">0</span></button>
+          <button class="filter-chip" data-filter="pending">대기 <span class="count-badge" id="report-count-pending">0</span></button>
+          <button class="filter-chip" data-filter="resolved">처리 <span class="count-badge" id="report-count-resolved">0</span></button>
+          <button class="filter-chip" data-filter="rejected">거부 <span class="count-badge" id="report-count-rejected">0</span></button>
+        </div>
+        <div class="summary-banner" id="report-summary"></div>
+        <div class="section-card">
+          <div class="section-body" style="padding:0; overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>시간</th>
+                  <th>신고자</th>
+                  <th>대상</th>
+                  <th>사유</th>
+                  <th>상태</th>
+                  <th>긴급</th>
+                  <th>액션</th>
+                </tr>
+              </thead>
+              <tbody id="reports-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB: LOUNGE ═══ -->
+      <div class="tab-content" id="tab-lounge">
+        <div class="segment-control" id="lounge-segment">
+          <button class="segment-btn active" data-segment="posts">게시글 (<span id="lounge-post-count">0</span>)</button>
+          <button class="segment-btn" data-segment="gatherings">모임 (<span id="lounge-gathering-count">0</span>)</button>
+        </div>
+        <div class="filter-chips" id="lounge-filters">
+          <button class="filter-chip active" data-filter="all">전체</button>
+          <button class="filter-chip" data-filter="pinned">고정됨</button>
+          <button class="filter-chip" data-filter="reported">신고됨</button>
+        </div>
+        <div id="lounge-content">
+          <div class="loading-overlay"><div class="spinner"></div> 로딩 중...</div>
+        </div>
+        <div class="bulk-action-bar hidden" id="bulk-actions">
+          <span id="bulk-count">0개 선택</span>
+          <div style="display:flex;gap:8px;">
+            <button class="action-btn success" onclick="bulkPin()">일괄 고정</button>
+            <button class="action-btn danger" onclick="bulkDelete()">일괄 삭제</button>
           </div>
         </div>
       </div>
@@ -547,8 +725,40 @@
         </div>
       </div>
 
-      <!-- ═══ TAB: ANALYTICS ═══ -->
+      <!-- ═══ TAB: ANALYTICS (Enhanced) ═══ -->
       <div class="tab-content" id="tab-analytics">
+        <div class="section-card">
+          <div class="section-header"><span class="section-title">리텐션</span></div>
+          <div class="section-body" id="retention-bars">
+            <div class="loading-overlay"><div class="spinner"></div> 계산 중...</div>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="section-card">
+            <div class="section-header"><span class="section-title">7일 트렌드 (가입 + DAU)</span></div>
+            <div class="section-body"><div class="chart-container"><canvas id="chart-trend"></canvas></div></div>
+          </div>
+          <div class="section-card">
+            <div class="section-header"><span class="section-title">유저 분포</span></div>
+            <div class="section-body">
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+                <div><div class="chart-container" style="height:180px;"><canvas id="chart-tier-dist"></canvas></div><div style="text-align:center;font-size:11px;color:var(--text3);">티어</div></div>
+                <div><div class="chart-container" style="height:180px;"><canvas id="chart-plan-dist"></canvas></div><div style="text-align:center;font-size:11px;color:var(--text3);">플랜</div></div>
+                <div><div class="chart-container" style="height:180px;"><canvas id="chart-asset-dist"></canvas></div><div style="text-align:center;font-size:11px;color:var(--text3);">자산 구간</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="section-header"><span class="section-title">활동 피드</span></div>
+          <div class="section-body" id="activity-feed">
+            <div class="loading-overlay"><div class="spinner"></div> 로딩 중...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB: EVENT LOG ═══ -->
+      <div class="tab-content" id="tab-eventlog">
         <div class="section-card">
           <div class="section-header">
             <span class="section-title">최근 이벤트 로그 (100건)</span>
@@ -563,616 +773,1439 @@
                   <th>속성</th>
                 </tr>
               </thead>
-              <tbody id="analytics-tbody"></tbody>
+              <tbody id="eventlog-tbody"></tbody>
             </table>
           </div>
         </div>
       </div>
 
+      <!-- ═══ TAB: 사업방향 WBS ═══ -->
+      <div class="tab-content" id="tab-wbs">
+
+        <!-- 1차 GOAL -->
+        <div class="section-card">
+          <div class="section-header">
+            <span class="section-title">🎯 1차 GOAL - 앱의 존재 이유</span>
+          </div>
+          <div class="section-body">
+            <div style="display: grid; gap: 16px;">
+
+              <!-- 미션 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--green);">
+                <h3 style="font-size: 15px; margin-bottom: 8px; color: var(--green);">창업자 미션</h3>
+                <p style="color: var(--text2); font-size: 13px; line-height: 1.6;">
+                  <strong>타겟:</strong> 20~40대, 약 5천만원 모은 투자 입문자<br>
+                  <strong>핵심 문제:</strong> 시장 급락 시 패닉셀, 급등 시 FOMO 매수 → 자기만의 투자 기준이 없음<br>
+                  <strong>앱의 목적:</strong> 매일 5분 시장 맥락을 읽으며 "자기만의 투자 기준"을 형성하게 돕는 습관 앱<br>
+                  <strong>절대 원칙:</strong> "안심을 판다, 불안을 팔지 않는다" (버핏) — 공포 마케팅 금지
+                </p>
+              </div>
+
+              <!-- 핵심 철학 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">핵심 철학 (3인 라운드테이블 합의)</h3>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 120px;">인물</th>
+                      <th>핵심 주장</th>
+                      <th>앱 적용</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>이승건</strong><br><span style="color: var(--text3); font-size: 11px;">토스 CEO</span></td>
+                      <td>보상(크레딧)으로 교육을 감싸면 사용자는 성장하는 줄도 모르고 매일 온다</td>
+                      <td>매일 출석 보상 + 예측 게임 + 복기 루프</td>
+                    </tr>
+                    <tr>
+                      <td><strong>레이 달리오</strong><br><span style="color: var(--text3); font-size: 11px;">Bridgewater</span></td>
+                      <td>맥락(Context)을 제공하면 공포가 이해로 바뀐다</td>
+                      <td>맥락 카드: 역사/거시경제/기관행동/내 포트폴리오 4겹</td>
+                    </tr>
+                    <tr>
+                      <td><strong>워렌 버핏</strong><br><span style="color: var(--text3); font-size: 11px;">Berkshire</span></td>
+                      <td>매일 읽는 사람이 결국 이긴다. 복리는 지식에도 적용된다</td>
+                      <td>습관 루프: 읽기→예측→복기→기준 형성</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- 습관 루프 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">습관 루프 (Habit Loop) — 앱의 핵심 엔진</h3>
+                <div style="background: var(--bg); padding: 16px; border-radius: 8px; font-family: monospace; font-size: 13px; color: var(--green); text-align: center; line-height: 2;">
+                  맥락 카드 읽기 (교육) → 예측 투표 (참여) → 복기 & 정답 확인 (학습)<br>
+                  → 자기 기준 형성 (성장) → 패닉셀 방지 (최종 목표)
+                </div>
+                <p style="color: var(--text2); font-size: 13px; margin-top: 12px; line-height: 1.6;">
+                  <strong>매일 반복:</strong> 아침 맥락 카드 → 예측 질문 투표 → 다음날 결과 복기<br>
+                  <strong>보상 감싸기:</strong> 출석 2C + 적중 2C → 교육을 게임으로 포장<br>
+                  <strong>궁극 목표:</strong> 12개월 후 "시장이 -5% 빠져도 맥락을 이해하니 패닉셀 안 한다"
+                </p>
+              </div>
+
+              <!-- 3탭 구조 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">3-Tab 구조 (목표 아키텍처)</h3>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 80px;">탭</th>
+                      <th style="width: 120px;">이름</th>
+                      <th>역할</th>
+                      <th style="width: 120px;">체류시간 목표</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>1</strong></td>
+                      <td><strong>오늘 (Today)</strong></td>
+                      <td>맥락 카드 + 예측 투표 + Pulse 요약</td>
+                      <td>3~5분/일</td>
+                    </tr>
+                    <tr>
+                      <td><strong>2</strong></td>
+                      <td><strong>분석 (Checkup)</strong></td>
+                      <td>AI 진단 + 처방전 + 건강 점수</td>
+                      <td>필요 시</td>
+                    </tr>
+                    <tr>
+                      <td><strong>3</strong></td>
+                      <td><strong>전체 (More)</strong></td>
+                      <td>커뮤니티 + 설정 + 크레딧 + 부동산</td>
+                      <td>탐색</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 6월 MAU 목표 -->
+        <div class="section-card" style="margin-top: 16px;">
+          <div class="section-header">
+            <span class="section-title">📈 6월 MAU 목표 달성 전략</span>
+          </div>
+          <div class="section-body">
+            <div style="display: grid; gap: 16px;">
+
+              <!-- KPI 정의 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--blue);">
+                <h3 style="font-size: 15px; margin-bottom: 8px; color: var(--blue);">목표 KPI (2026년 6월)</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 12px;">
+                  <div style="background: var(--bg); padding: 12px; border-radius: 8px;">
+                    <div style="font-size: 24px; font-weight: 700; color: var(--green);">500</div>
+                    <div style="font-size: 12px; color: var(--text2);">MAU (월간 활성 유저)</div>
+                  </div>
+                  <div style="background: var(--bg); padding: 12px; border-radius: 8px;">
+                    <div style="font-size: 24px; font-weight: 700; color: var(--green);">40%+</div>
+                    <div style="font-size: 12px; color: var(--text2);">D7 리텐션</div>
+                  </div>
+                  <div style="background: var(--bg); padding: 12px; border-radius: 8px;">
+                    <div style="font-size: 24px; font-weight: 700; color: var(--green);">30%</div>
+                    <div style="font-size: 12px; color: var(--text2);">Daily Active 비율</div>
+                  </div>
+                  <div style="background: var(--bg); padding: 12px; border-radius: 8px;">
+                    <div style="font-size: 24px; font-weight: 700; color: var(--green);">5%</div>
+                    <div style="font-size: 12px; color: var(--text2);">무료→유료 전환율</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 핵심 인사이트 -->
+              <div style="background: rgba(255, 193, 7, 0.1); padding: 16px; border-radius: 8px; border-left: 3px solid var(--yellow);">
+                <h3 style="font-size: 15px; margin-bottom: 8px; color: var(--yellow);">⚠️ 이승건: "첫 7일이 전부입니다"</h3>
+                <p style="color: var(--text2); font-size: 13px; line-height: 1.6;">
+                  사용자가 7일 안에 습관을 만들지 못하면 영원히 안 돌아옵니다.<br><br>
+                  <strong>현재 문제:</strong><br>
+                  ❌ 5탭 구조 → 사용자가 어디 가야 할지 모름<br>
+                  ❌ 맥락 카드가 "오늘" 탭에 없고 흩어져 있음<br>
+                  ❌ 예측 투표 → 복기 연결이 약함 (다음날 알림 없음)<br>
+                  ❌ "또래 비교" 넛지 없음 (동기부여 부족)
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 9-12 실행 계획 -->
+        <div class="section-card" style="margin-top: 16px;">
+          <div class="section-header">
+            <span class="section-title">🗓 Phase 9-12 실행 계획</span>
+          </div>
+          <div class="section-body">
+            <div style="display: grid; gap: 16px;">
+
+              <!-- Phase 9 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--green);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <h3 style="font-size: 15px; color: var(--green);">Phase 9: 출시 준비</h3>
+                  <span style="background: var(--green-dim); color: var(--green); padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">2월 3주차 (D-7)</span>
+                </div>
+                <p style="color: var(--text2); font-size: 13px; margin-bottom: 8px;"><strong>목표:</strong> TestFlight → App Store 제출</p>
+                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
+                  <li>5탭 → 3탭 전환 (app/(tabs)/_layout.tsx)</li>
+                  <li>"오늘" 탭 리디자인 (맥락 카드 UI 컴포넌트)</li>
+                  <li>온보딩 개선 (첫 자산 등록 → 첫 맥락 카드 경험)</li>
+                  <li>Premium 페이월 연결 (맥락 카드 4겹 중 2겹만 무료)</li>
+                  <li>iOS 빌드 → TestFlight 제출 → 내부 테스트 (3명 이상)</li>
+                </ul>
+              </div>
+
+              <!-- Phase 10 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--blue);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <h3 style="font-size: 15px; color: var(--blue);">Phase 10: 리텐션 최적화</h3>
+                  <span style="background: rgba(33, 150, 243, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">출시 후 1주일</span>
+                </div>
+                <p style="color: var(--text2); font-size: 13px; margin-bottom: 8px;"><strong>목표:</strong> D7 리텐션 40% 달성</p>
+                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
+                  <li>아침 7:30 푸시: "어제 예측 결과 + 오늘 맥락"</li>
+                  <li>3일 미접속 시: "시장이 -2% 급락했어요. 맥락 확인하세요"</li>
+                  <li>연속 기록 (스트릭): "7일 연속 출석 달성! +10C"</li>
+                  <li>같은 자산 구간 평균 건강 점수 계산</li>
+                  <li>"또래보다 +5점 높아요!" 넛지 카드</li>
+                  <li>복기 루프 강화: 어제 예측 vs 실제 결과 비교 UI</li>
+                </ul>
+              </div>
+
+              <!-- Phase 11 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--purple);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <h3 style="font-size: 15px; color: var(--purple);">Phase 11: 바이럴 루프</h3>
+                  <span style="background: rgba(156, 39, 176, 0.15); color: var(--purple); padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">출시 후 2주</span>
+                </div>
+                <p style="color: var(--text2); font-size: 13px; margin-bottom: 8px;"><strong>목표:</strong> 자연 유입 50명/주</p>
+                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
+                  <li>건강 점수 카드 이미지 생성 (OG Image)</li>
+                  <li>카카오톡 공유 → 5C 보상</li>
+                  <li>공유 클릭 → 가입 추적</li>
+                  <li>초대 코드 생성</li>
+                  <li>친구 초대 → 양쪽 각 10C</li>
+                  <li>초대 리더보드 (상위 10명 Premium 1개월 무료)</li>
+                </ul>
+              </div>
+
+              <!-- Phase 12 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--yellow);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <h3 style="font-size: 15px; color: var(--yellow);">Phase 12: Premium 전환</h3>
+                  <span style="background: rgba(255, 193, 7, 0.15); color: var(--yellow); padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">출시 후 1개월</span>
+                </div>
+                <p style="color: var(--text2); font-size: 13px; margin-bottom: 8px;"><strong>목표:</strong> 무료→유료 전환율 5%</p>
+                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
+                  <li>위기 전환: 시장 -3% 급락 시 "기관들은 뭘 하고 있을까?" → Premium 잠금</li>
+                  <li>손실 회피: "해지하면 27일 연속 기록 사라집니다" 경고</li>
+                  <li>가치 비교 화면: 무료 vs Premium (4겹 맥락, 3회 AI 진단 등)</li>
+                  <li>3일 체험권: 5C로 구매 가능</li>
+                  <li>가격 A/B 테스트: A그룹 ₩4,900/월 vs B그룹 ₩3,900/월 (첫 달 50% 할인)</li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 시뮬레이션 -->
+        <div class="section-card" style="margin-top: 16px;">
+          <div class="section-header">
+            <span class="section-title">📊 6월 목표 시뮬레이션</span>
+          </div>
+          <div class="section-body" style="padding:0; overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>주차</th>
+                  <th>MAU</th>
+                  <th>D7 리텐션</th>
+                  <th>유료 전환</th>
+                  <th>MRR</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>W1 (출시)</strong></td>
+                  <td>50</td>
+                  <td>30%</td>
+                  <td>0%</td>
+                  <td>₩0</td>
+                  <td>TestFlight → App Store</td>
+                </tr>
+                <tr>
+                  <td><strong>W4</strong></td>
+                  <td>120</td>
+                  <td>35%</td>
+                  <td>2%</td>
+                  <td>₩11,760</td>
+                  <td>알림 시스템 가동</td>
+                </tr>
+                <tr>
+                  <td><strong>W8</strong></td>
+                  <td>250</td>
+                  <td>38%</td>
+                  <td>3%</td>
+                  <td>₩36,750</td>
+                  <td>공유 기능 활성화</td>
+                </tr>
+                <tr>
+                  <td><strong>W12</strong></td>
+                  <td>400</td>
+                  <td>40%</td>
+                  <td>4%</td>
+                  <td>₩78,400</td>
+                  <td>또래 비교 넛지</td>
+                </tr>
+                <tr style="background: var(--green-dim);">
+                  <td><strong>W16 (6월)</strong></td>
+                  <td style="color: var(--green); font-weight: 700;">500</td>
+                  <td style="color: var(--green); font-weight: 700;">40%</td>
+                  <td style="color: var(--green); font-weight: 700;">5%</td>
+                  <td style="color: var(--green); font-weight: 700;">₩122,500</td>
+                  <td style="color: var(--green); font-weight: 700;">🎯 목표 달성</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="padding: 16px;">
+              <p style="color: var(--text2); font-size: 13px; line-height: 1.6;">
+                <strong>손익 분기:</strong> M8 (4월) 달성 예상 (고정비용 ₩88,000/월)<br>
+                <strong>6월 순수익:</strong> ₩122,500 - ₩88,000 = <span style="color: var(--green); font-weight: 700;">₩34,500/월</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 최종 의사결정 -->
+        <div class="section-card" style="margin-top: 16px;">
+          <div class="section-header">
+            <span class="section-title">✅ 최종 의사결정 (3인 라운드테이블)</span>
+          </div>
+          <div class="section-body">
+            <div style="display: grid; gap: 16px;">
+
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 8px; color: var(--green);">이승건: "결재합니다. 조건 3가지"</h3>
+                <ol style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
+                  <li>Phase 9는 2월 안에 완료 (3월 1일 출시)</li>
+                  <li>Phase 10 실패 시 (D7 < 30%) 즉시 피벗 (알림 시간/맥락 카드 형식 변경)</li>
+                  <li>6월 MAU 500 미달성 시 Premium 가격 인하 금지 (가치 개선 집중)</li>
+                </ol>
+              </div>
+
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 8px; color: var(--blue);">달리오: "동의합니다. 단, 맥락 카드 품질이 전부입니다"</h3>
+                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
+                  <li>Edge Function Task G (맥락 카드 생성) 정확도 검증 필수</li>
+                  <li>4겹 레이어 중 Layer 4 (내 포트폴리오 영향) 연결이 핵심</li>
+                </ul>
+              </div>
+
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 8px; color: var(--purple);">버핏: "간결함을 유지하면 성공합니다"</h3>
+                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
+                  <li>신기능 추가 요청은 모두 거절</li>
+                  <li>기존 기능 완성도 80% → 95% 올리기</li>
+                </ul>
+              </div>
+
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 8px; color: var(--yellow);">캐시 우드: "데이터를 믿으세요"</h3>
+                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
+                  <li>매주 Analytics 리포트 확인</li>
+                  <li>A/B 테스트 결과로만 의사결정</li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
+
+    <!-- ═══ MODALS ═══ -->
+    <div class="modal-overlay" id="modal-user-detail">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="modal-user-name">유저 상세</h3>
+          <button class="modal-close" onclick="hideModal('modal-user-detail')">&times;</button>
+        </div>
+        <div class="modal-body" id="modal-user-body">
+          <div class="loading-overlay"><div class="spinner"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-report-detail">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>신고 상세</h3>
+          <button class="modal-close" onclick="hideModal('modal-report-detail')">&times;</button>
+        </div>
+        <div class="modal-body" id="modal-report-body">
+          <div class="loading-overlay"><div class="spinner"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-credit-grant">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>크레딧 지급</h3>
+          <button class="modal-close" onclick="hideModal('modal-credit-grant')">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="credit-grant-user-id" />
+          <div class="modal-section">
+            <div class="modal-section-title">대상 유저</div>
+            <div id="credit-grant-user-info" style="font-size:14px;"></div>
+          </div>
+          <div class="modal-section">
+            <div class="modal-section-title">지급 금액</div>
+            <input type="number" class="modal-input" id="credit-grant-amount" placeholder="크레딧 수량 (예: 10)" min="1" />
+          </div>
+          <div class="modal-section">
+            <div class="modal-section-title">메모</div>
+            <textarea class="modal-textarea" id="credit-grant-memo" placeholder="지급 사유 (선택)"></textarea>
+          </div>
+          <button class="action-btn primary" onclick="executeGrantCredit()" style="width:100%;padding:12px;">지급하기</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════ -->
   <!-- JAVASCRIPT                                                   -->
   <!-- ═══════════════════════════════════════════════════════════ -->
   <script>
-    let sb = null; // Supabase client (service_role for admin queries)
-    let authClient = null; // Supabase client (anon for Google auth)
+    let sb = null;
     let allUsers = [];
+    let allReports = [];
+    let allPosts = [];
+    let allGatherings = [];
     let charts = {};
+    let tabDataLoaded = {};
+    let selectedPosts = new Set();
+    let currentLoungeSegment = 'posts';
+    let currentReportFilter = 'all';
+    let currentUserSort = 'recent';
 
-    // ── Config ──
-    const SUPABASE_URL = 'https://ruqeinfcqhgexrckonsy.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_Pg6VpItZCY7n3uBxnSy-0w_BKgxW_kv';
-    const ADMIN_EMAILS = ['jimmyjeon420@gmail.com']; // 관리자 이메일 목록
-
-    // ── Init auth client + check session ──
-    window.addEventListener('DOMContentLoaded', async () => {
-      authClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-      // Check if user is already logged in (returning from OAuth redirect)
-      const { data: { session } } = await authClient.auth.getSession();
-      if (session) {
-        await verifyAdminAndLogin(session);
+    // ── Init ──
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('baln_admin_creds');
+      if (saved) {
+        try {
+          const { url, key } = JSON.parse(saved);
+          document.getElementById('supabase-url').value = url;
+          document.getElementById('service-key').value = key;
+          handleLogin();
+        } catch { /* ignore */ }
       }
 
-      // Listen for auth state changes (OAuth callback)
-      authClient.auth.onAuthStateChange(async (event, session) => {
-        if (event === 'SIGNED_IN' && session) {
-          await verifyAdminAndLogin(session);
-        }
-      });
-
-      // Tab switching
+      // Tab switching with lazy load
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
           document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
           btn.classList.add('active');
           document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+          const tab = btn.dataset.tab;
+          if (!tabDataLoaded[tab]) {
+            tabDataLoaded[tab] = true;
+            loadTabData(tab);
+          }
+        });
+      });
+
+      // User sort chips
+      document.querySelectorAll('#user-sort-chips .filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('#user-sort-chips .filter-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          currentUserSort = chip.dataset.sort;
+          sortAndRenderUsers();
+        });
+      });
+
+      // Report filter chips
+      document.querySelectorAll('#report-filters .filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('#report-filters .filter-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          currentReportFilter = chip.dataset.filter;
+          renderReportsTable();
+        });
+      });
+
+      // Lounge segment control
+      document.querySelectorAll('#lounge-segment .segment-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#lounge-segment .segment-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentLoungeSegment = btn.dataset.segment;
+          document.getElementById('lounge-filters').style.display = currentLoungeSegment === 'posts' ? 'flex' : 'none';
+          renderLoungeContent();
+        });
+      });
+
+      // Lounge filter chips
+      document.querySelectorAll('#lounge-filters .filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('#lounge-filters .filter-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          renderLoungeContent();
+        });
+      });
+
+      // Modal: ESC to close, overlay click to close
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.modal-overlay.visible').forEach(m => hideModal(m.id));
+        }
+      });
+      document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', e => {
+          if (e.target === overlay) hideModal(overlay.id);
         });
       });
     });
 
+    function loadTabData(tab) {
+      switch(tab) {
+        case 'users': loadUsers(); break;
+        case 'credits': loadCredits(); break;
+        case 'reports': loadReports(); break;
+        case 'lounge': loadLoungePosts(); loadGatherings(); break;
+        case 'engagement': loadEngagement(); break;
+        case 'content': loadContent(); break;
+        case 'analytics': loadEnhancedAnalytics(); break;
+        case 'eventlog': loadEventLog(); break;
+      }
+    }
+
     // ══════════════════════════════════════════════════════════════
-    // AUTH (Google OAuth + Admin Email Check)
+    // AUTH
     // ══════════════════════════════════════════════════════════════
 
-    async function handleGoogleLogin() {
+    async function handleLogin() {
+      const url = document.getElementById('supabase-url').value.trim();
+      const key = document.getElementById('service-key').value.trim();
       const errEl = document.getElementById('login-error');
       const btn = document.getElementById('login-btn');
-      btn.disabled = true;
-      errEl.textContent = '';
-
+      if (!url || !key) { errEl.textContent = 'URL과 Service Key를 모두 입력하세요.'; return; }
+      btn.disabled = true; btn.textContent = '연결 중...'; errEl.textContent = '';
       try {
-        const { error } = await authClient.auth.signInWithOAuth({
-          provider: 'google',
-          options: {
-            redirectTo: window.location.origin + window.location.pathname,
-          }
-        });
-        if (error) throw error;
-      } catch (err) {
-        errEl.textContent = `로그인 실패: ${err.message}`;
-        btn.disabled = false;
-      }
-    }
-
-    async function verifyAdminAndLogin(session) {
-      const errEl = document.getElementById('login-error');
-      const email = session.user?.email;
-
-      if (!email || !ADMIN_EMAILS.includes(email)) {
-        errEl.textContent = `접근 거부: ${email || '알 수 없는 계정'}은 관리자가 아닙니다.`;
-        await authClient.auth.signOut();
-        return;
-      }
-
-      // Admin verified — init service_role client for full data access
-      const savedKey = localStorage.getItem('baln_admin_svc_key');
-      if (!savedKey) {
-        // First time: prompt for service_role key (one-time setup)
-        const key = prompt('최초 1회: Supabase Service Role Key를 입력하세요.\n(이후 자동 저장됩니다)');
-        if (!key) {
-          errEl.textContent = 'Service Role Key가 필요합니다.';
-          await authClient.auth.signOut();
-          return;
-        }
-        localStorage.setItem('baln_admin_svc_key', key);
-      }
-
-      const svcKey = localStorage.getItem('baln_admin_svc_key');
-      sb = window.supabase.createClient(SUPABASE_URL, svcKey, {
-        auth: { autoRefreshToken: false, persistSession: false },
-      });
-
-      // Test connection
-      try {
+        sb = window.supabase.createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
         const { error } = await sb.from('profiles').select('*', { count: 'exact', head: true });
         if (error) throw error;
+        localStorage.setItem('baln_admin_creds', JSON.stringify({ url, key }));
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        refreshAll();
       } catch (err) {
-        errEl.textContent = `DB 연결 실패: ${err.message}`;
-        localStorage.removeItem('baln_admin_svc_key');
-        await authClient.auth.signOut();
-        return;
-      }
-
-      // Show dashboard
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-
-      // Update topbar with admin info
-      const envBadge = document.getElementById('env-badge');
-      if (envBadge) envBadge.textContent = email;
-
-      refreshAll();
+        errEl.textContent = `연결 실패: ${err.message || '키를 확인하세요'}`;
+      } finally { btn.disabled = false; btn.textContent = '로그인'; }
     }
 
-    async function handleLogout() {
-      if (authClient) await authClient.auth.signOut();
+    function handleLogout() {
+      localStorage.removeItem('baln_admin_creds');
       sb = null;
       document.getElementById('dashboard').style.display = 'none';
       document.getElementById('login-screen').style.display = 'flex';
     }
 
     // ══════════════════════════════════════════════════════════════
-    // DATA LOADING
+    // REFRESH — Overview only (lazy load rest)
     // ══════════════════════════════════════════════════════════════
 
     async function refreshAll() {
       document.getElementById('last-updated').textContent = `마지막 갱신: ${new Date().toLocaleTimeString('ko')}`;
-
-      await Promise.all([
-        loadOverview(),
-        loadUsers(),
-        loadCredits(),
-        loadEngagement(),
-        loadContent(),
-        loadAnalytics(),
-      ]);
+      tabDataLoaded = { overview: true };
+      await loadOverview();
     }
 
-    // ── OVERVIEW TAB ──
+    // ══════════════════════════════════════════════════════════════
+    // OVERVIEW (Enhanced with deltas)
+    // ══════════════════════════════════════════════════════════════
 
     async function loadOverview() {
       try {
+        const now = new Date();
+        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+        const yesterdayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1).toISOString();
+
         const [
           { count: totalUsers },
           { count: premiumUsers },
           { data: credits },
           { data: recentSignups },
-          { data: todayEvents },
+          { count: todayDAU },
+          { count: yesterdayDAU },
+          { count: todaySignups },
+          { count: yesterdaySignups },
+          { count: todayVotes },
+          { count: yesterdayVotes },
+          { count: todayPostCount },
+          { count: yesterdayPostCount },
+          { data: todayCreditTx },
+          { data: yesterdayCreditTx },
           { data: creditTx },
         ] = await Promise.all([
           sb.from('profiles').select('*', { count: 'exact', head: true }),
           sb.from('profiles').select('*', { count: 'exact', head: true }).neq('plan_type', 'free').not('plan_type', 'is', null),
           sb.from('user_credits').select('balance, lifetime_spent'),
           sb.from('profiles').select('created_at').order('created_at', { ascending: false }).limit(30),
-          sb.from('analytics_events').select('id', { count: 'exact', head: true }).gte('created_at', new Date(Date.now() - 86400000).toISOString()),
+          sb.from('analytics_events').select('*', { count: 'exact', head: true }).gte('created_at', todayStart),
+          sb.from('analytics_events').select('*', { count: 'exact', head: true }).gte('created_at', yesterdayStart).lt('created_at', todayStart),
+          sb.from('profiles').select('*', { count: 'exact', head: true }).gte('created_at', todayStart),
+          sb.from('profiles').select('*', { count: 'exact', head: true }).gte('created_at', yesterdayStart).lt('created_at', todayStart),
+          sb.from('prediction_votes').select('*', { count: 'exact', head: true }).gte('created_at', todayStart),
+          sb.from('prediction_votes').select('*', { count: 'exact', head: true }).gte('created_at', yesterdayStart).lt('created_at', todayStart),
+          sb.from('community_posts').select('*', { count: 'exact', head: true }).gte('created_at', todayStart),
+          sb.from('community_posts').select('*', { count: 'exact', head: true }).gte('created_at', yesterdayStart).lt('created_at', todayStart),
+          sb.from('credit_transactions').select('amount').gte('created_at', todayStart),
+          sb.from('credit_transactions').select('amount').gte('created_at', yesterdayStart).lt('created_at', todayStart),
           sb.from('credit_transactions').select('type, amount, created_at').order('created_at', { ascending: false }).limit(500),
         ]);
 
-        const totalCreditsInCirculation = (credits || []).reduce((sum, c) => sum + (c.balance || 0), 0);
-        const totalSpent = (credits || []).reduce((sum, c) => sum + (c.lifetime_spent || 0), 0);
-        const conversionRate = totalUsers > 0 ? ((premiumUsers || 0) / totalUsers * 100).toFixed(1) : '0';
-        const todayDAU = todayEvents?.count || 0;
+        const totalCredits = (credits || []).reduce((s, c) => s + (c.balance || 0), 0);
+        const totalSpent = (credits || []).reduce((s, c) => s + (c.lifetime_spent || 0), 0);
+        const convRate = totalUsers > 0 ? ((premiumUsers || 0) / totalUsers * 100).toFixed(1) : '0';
+        const todayCreditSum = (todayCreditTx || []).reduce((s, t) => s + Math.max(0, t.amount || 0), 0);
+        const yesterdayCreditSum = (yesterdayCreditTx || []).reduce((s, t) => s + Math.max(0, t.amount || 0), 0);
 
         document.getElementById('overview-metrics').innerHTML = `
           <div class="metric-card">
             <div class="metric-label">총 유저</div>
-            <div class="metric-value green">${(totalUsers || 0).toLocaleString()}</div>
-            <div class="metric-sub">가입자 전체</div>
+            <div class="metric-value green">${(totalUsers||0).toLocaleString()}</div>
+            ${renderDelta(todaySignups||0, yesterdaySignups||0, '명')}
+            <div class="metric-sub">오늘 신규 ${todaySignups||0}명</div>
           </div>
           <div class="metric-card">
             <div class="metric-label">Premium 유저</div>
-            <div class="metric-value yellow">${(premiumUsers || 0).toLocaleString()}</div>
-            <div class="metric-sub">전환율 ${conversionRate}%</div>
+            <div class="metric-value yellow">${(premiumUsers||0).toLocaleString()}</div>
+            <div class="metric-sub">전환율 ${convRate}%</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">오늘 활성 이벤트</div>
-            <div class="metric-value blue">${todayDAU.toLocaleString()}</div>
-            <div class="metric-sub">최근 24시간</div>
+            <div class="metric-label">오늘 DAU</div>
+            <div class="metric-value blue">${(todayDAU||0).toLocaleString()}</div>
+            ${renderDelta(todayDAU||0, yesterdayDAU||0, '')}
+            <div class="metric-sub">어제 ${(yesterdayDAU||0).toLocaleString()}</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">오늘 신규가입</div>
+            <div class="metric-value green">${(todaySignups||0).toLocaleString()}</div>
+            ${renderDelta(todaySignups||0, yesterdaySignups||0, '명')}
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">오늘 투표</div>
+            <div class="metric-value blue">${(todayVotes||0).toLocaleString()}</div>
+            ${renderDelta(todayVotes||0, yesterdayVotes||0, '건')}
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">오늘 게시글</div>
+            <div class="metric-value purple">${(todayPostCount||0).toLocaleString()}</div>
+            ${renderDelta(todayPostCount||0, yesterdayPostCount||0, '건')}
           </div>
           <div class="metric-card">
             <div class="metric-label">유통 크레딧</div>
-            <div class="metric-value purple">${totalCreditsInCirculation.toLocaleString()}C</div>
-            <div class="metric-sub">잔액 합계 (${(totalCreditsInCirculation * 100).toLocaleString()}원)</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">소비된 크레딧</div>
-            <div class="metric-value">${totalSpent.toLocaleString()}C</div>
-            <div class="metric-sub">${(totalSpent * 100).toLocaleString()}원 상당</div>
+            <div class="metric-value yellow">${totalCredits.toLocaleString()}C</div>
+            ${renderDelta(todayCreditSum, yesterdayCreditSum, 'C')}
+            <div class="metric-sub">${(totalCredits*100).toLocaleString()}원</div>
           </div>
           <div class="metric-card">
             <div class="metric-label">예상 월 매출</div>
-            <div class="metric-value green">${((premiumUsers || 0) * 4900).toLocaleString()}원</div>
-            <div class="metric-sub">Premium ${premiumUsers || 0}명 x 4,900원</div>
+            <div class="metric-value green">${((premiumUsers||0)*4900).toLocaleString()}원</div>
+            <div class="metric-sub">Premium ${premiumUsers||0}명 × ₩4,900</div>
           </div>
         `;
-
-        // Signup chart
         renderSignupChart(recentSignups || []);
-
-        // Credit flow chart
         renderCreditFlowChart(creditTx || []);
       } catch (err) {
         console.error('[Overview]', err);
-        document.getElementById('overview-metrics').innerHTML = `<div class="empty-state"><p>데이터 로딩 실패: ${err.message}</p></div>`;
+        document.getElementById('overview-metrics').innerHTML = `<div class="empty-state"><p>로딩 실패: ${err.message}</p></div>`;
       }
     }
 
     function renderSignupChart(signups) {
       const days = {};
-      signups.forEach(s => {
-        const day = s.created_at?.split('T')[0];
-        if (day) days[day] = (days[day] || 0) + 1;
-      });
+      signups.forEach(s => { const d = s.created_at?.split('T')[0]; if (d) days[d] = (days[d]||0)+1; });
       const labels = Object.keys(days).reverse();
-      const data = labels.map(d => days[d]);
-
       if (charts.signups) charts.signups.destroy();
       charts.signups = new Chart(document.getElementById('chart-signups'), {
         type: 'bar',
-        data: {
-          labels: labels.map(d => d.slice(5)),
-          datasets: [{
-            label: '가입자',
-            data,
-            backgroundColor: 'rgba(76, 175, 80, 0.6)',
-            borderRadius: 4,
-          }]
-        },
-        options: chartOptions('일별 가입자'),
+        data: { labels: labels.map(d=>d.slice(5)), datasets: [{ label:'가입자', data:labels.map(d=>days[d]), backgroundColor:'rgba(76,175,80,0.6)', borderRadius:4 }] },
+        options: chartOptions(),
       });
     }
 
     function renderCreditFlowChart(transactions) {
       const days = {};
       transactions.forEach(tx => {
-        const day = tx.created_at?.split('T')[0];
-        if (!day) return;
-        if (!days[day]) days[day] = { granted: 0, spent: 0 };
-        if (tx.type === 'bonus' || tx.type === 'purchase') days[day].granted += tx.amount;
-        else if (tx.type === 'spend') days[day].spent += Math.abs(tx.amount);
+        const d = tx.created_at?.split('T')[0]; if(!d) return;
+        if(!days[d]) days[d]={granted:0,spent:0};
+        if(tx.type==='bonus'||tx.type==='purchase') days[d].granted+=tx.amount;
+        else if(tx.type==='spend') days[d].spent+=Math.abs(tx.amount);
       });
       const labels = Object.keys(days).sort().slice(-14);
-
       if (charts.credits) charts.credits.destroy();
       charts.credits = new Chart(document.getElementById('chart-credits'), {
         type: 'line',
-        data: {
-          labels: labels.map(d => d.slice(5)),
-          datasets: [
-            {
-              label: '지급',
-              data: labels.map(d => days[d]?.granted || 0),
-              borderColor: '#4CAF50',
-              backgroundColor: 'rgba(76, 175, 80, 0.1)',
-              fill: true,
-              tension: 0.3,
-            },
-            {
-              label: '소비',
-              data: labels.map(d => days[d]?.spent || 0),
-              borderColor: '#CF6679',
-              backgroundColor: 'rgba(207, 102, 121, 0.1)',
-              fill: true,
-              tension: 0.3,
-            },
-          ]
-        },
-        options: chartOptions('크레딧'),
+        data: { labels: labels.map(d=>d.slice(5)), datasets: [
+          { label:'지급', data:labels.map(d=>days[d]?.granted||0), borderColor:'#4CAF50', backgroundColor:'rgba(76,175,80,0.1)', fill:true, tension:0.3 },
+          { label:'소비', data:labels.map(d=>days[d]?.spent||0), borderColor:'#CF6679', backgroundColor:'rgba(207,102,121,0.1)', fill:true, tension:0.3 },
+        ]},
+        options: chartOptions(),
       });
     }
 
-    // ── USERS TAB ──
+    // ══════════════════════════════════════════════════════════════
+    // USERS (Enhanced)
+    // ══════════════════════════════════════════════════════════════
 
     async function loadUsers() {
       try {
-        const { data: profiles, error } = await sb
-          .from('profiles')
-          .select('id, email, created_at, plan_type, total_assets')
-          .order('created_at', { ascending: false })
-          .limit(500);
-
+        const { data: profiles, error } = await sb.from('profiles')
+          .select('id, email, created_at, plan_type, total_assets, tier, last_active_date, is_banned, current_streak')
+          .order('created_at', { ascending: false }).limit(500);
         if (error) throw error;
-
-        // Load credits and prediction stats
-        const userIds = (profiles || []).map(p => p.id);
-
-        const [{ data: credits }, { data: predStats }] = await Promise.all([
-          sb.from('user_credits').select('user_id, balance').in('user_id', userIds.slice(0, 100)),
-          sb.from('prediction_user_stats').select('user_id, accuracy_pct, total_predictions').in('user_id', userIds.slice(0, 100)),
+        const userIds = (profiles||[]).map(p=>p.id);
+        const [{ data: creds }, { data: predStats }] = await Promise.all([
+          sb.from('user_credits').select('user_id, balance').in('user_id', userIds.slice(0,200)),
+          sb.from('prediction_user_stats').select('user_id, accuracy_pct, total_predictions').in('user_id', userIds.slice(0,200)),
         ]);
-
-        const creditMap = {};
-        (credits || []).forEach(c => { creditMap[c.user_id] = c.balance; });
-
-        const predMap = {};
-        (predStats || []).forEach(p => { predMap[p.user_id] = p; });
-
-        allUsers = (profiles || []).map(p => ({
+        const creditMap = {}; (creds||[]).forEach(c => { creditMap[c.user_id]=c.balance; });
+        const predMap = {}; (predStats||[]).forEach(p => { predMap[p.user_id]=p; });
+        allUsers = (profiles||[]).map(p => ({
           ...p,
-          credits: creditMap[p.id] || 0,
-          accuracy: predMap[p.id]?.accuracy_pct || 0,
-          predictions: predMap[p.id]?.total_predictions || 0,
+          credits: creditMap[p.id]||0,
+          accuracy: predMap[p.id]?.accuracy_pct||0,
+          predictions: predMap[p.id]?.total_predictions||0,
         }));
-
         document.getElementById('user-count').textContent = allUsers.length;
-        renderUsersTable(allUsers);
-      } catch (err) {
-        console.error('[Users]', err);
+        sortAndRenderUsers();
+      } catch (err) { console.error('[Users]', err); }
+    }
+
+    function sortAndRenderUsers() {
+      let sorted = [...allUsers];
+      switch(currentUserSort) {
+        case 'recent': sorted.sort((a,b) => (b.last_active_date||'') > (a.last_active_date||'') ? 1 : -1); break;
+        case 'assets': sorted.sort((a,b) => (b.total_assets||0) - (a.total_assets||0)); break;
+        case 'credits': sorted.sort((a,b) => b.credits - a.credits); break;
+        case 'created': sorted.sort((a,b) => new Date(b.created_at) - new Date(a.created_at)); break;
       }
+      renderUsersTable(sorted);
     }
 
     function renderUsersTable(users) {
-      const tbody = document.getElementById('users-tbody');
-      tbody.innerHTML = users.map(u => `
-        <tr>
+      document.getElementById('users-tbody').innerHTML = users.map(u => `
+        <tr class="clickable" onclick="showUserDetail('${u.id}')">
+          <td><span class="status-dot ${getActivityDotColor(u.last_active_date)}"></span></td>
           <td>${formatDate(u.created_at)}</td>
-          <td>${u.email || u.id.slice(0, 8)}</td>
-          <td><span class="tier-badge ${u.plan_type && u.plan_type !== 'free' ? 'tier-premium' : 'tier-free'}">
-            ${u.plan_type || 'free'}
-          </span></td>
+          <td>${u.is_banned ? '🚫 ' : ''}${u.email || u.id.slice(0,8)}</td>
+          <td><span class="tier-badge ${u.plan_type&&u.plan_type!=='free'?'tier-premium':'tier-free'}">${u.plan_type||'free'}</span></td>
           <td>${u.credits}C</td>
-          <td>-</td>
-          <td>${u.predictions > 0 ? `${u.accuracy}% (${u.predictions}회)` : '-'}</td>
-          <td>${u.total_assets ? formatKRW(u.total_assets) : '-'}</td>
+          <td>${u.current_streak||0}일</td>
+          <td>${u.predictions>0?`${u.accuracy}% (${u.predictions}회)`:'-'}</td>
+          <td>${u.total_assets?formatKRW(u.total_assets):'-'}</td>
         </tr>
       `).join('');
     }
 
     function searchUsers(query) {
       const q = query.toLowerCase();
-      const filtered = allUsers.filter(u =>
-        (u.email && u.email.toLowerCase().includes(q)) ||
-        u.id.toLowerCase().includes(q)
-      );
+      const filtered = allUsers.filter(u => (u.email&&u.email.toLowerCase().includes(q)) || u.id.toLowerCase().includes(q));
       renderUsersTable(filtered);
     }
 
-    // ── CREDITS TAB ──
+    // ── User Detail Modal ──
+    async function showUserDetail(userId) {
+      showModal('modal-user-detail');
+      const body = document.getElementById('modal-user-body');
+      body.innerHTML = '<div class="loading-overlay"><div class="spinner"></div> 로딩 중...</div>';
+      try {
+        const [{ data: profile }, { data: creditData }, { data: txData }, { data: predData }, { data: badgeData }, { data: actData }] = await Promise.all([
+          sb.from('profiles').select('*').eq('id', userId).single(),
+          sb.from('user_credits').select('*').eq('user_id', userId).maybeSingle(),
+          sb.from('credit_transactions').select('*').eq('user_id', userId).order('created_at',{ascending:false}).limit(10),
+          sb.from('prediction_user_stats').select('*').eq('user_id', userId).maybeSingle(),
+          sb.from('user_badges').select('*').eq('user_id', userId),
+          sb.from('analytics_events').select('event_name, created_at').eq('user_id', userId).order('created_at',{ascending:false}).limit(20),
+        ]);
+        document.getElementById('modal-user-name').textContent = profile?.email || userId.slice(0,8);
+        body.innerHTML = `
+          <div class="modal-section">
+            <div class="modal-section-title">기본 정보</div>
+            <div class="info-grid">
+              <div><div class="info-label">이메일</div><div class="info-value">${profile?.email||'-'}</div></div>
+              <div><div class="info-label">플랜</div><div class="info-value">${profile?.plan_type||'free'}</div></div>
+              <div><div class="info-label">티어</div><div class="info-value">${profile?.tier||'SILVER'}</div></div>
+              <div><div class="info-label">가입일</div><div class="info-value">${formatDate(profile?.created_at)}</div></div>
+              <div><div class="info-label">최근 활동</div><div class="info-value"><span class="status-dot ${getActivityDotColor(profile?.last_active_date)}"></span>${profile?.last_active_date||'없음'}</div></div>
+              <div><div class="info-label">스트릭</div><div class="info-value">${profile?.current_streak||0}일 (최장 ${profile?.longest_streak||0}일)</div></div>
+              <div><div class="info-label">자산</div><div class="info-value">${profile?.total_assets?formatKRW(profile.total_assets):'-'}</div></div>
+              <div><div class="info-label">차단 상태</div><div class="info-value">${profile?.is_banned?'🚫 차단됨':'정상'}</div></div>
+            </div>
+          </div>
+          <div class="modal-section">
+            <div class="modal-section-title">크레딧</div>
+            <div class="info-grid">
+              <div><div class="info-label">잔액</div><div class="info-value">${creditData?.balance||0}C</div></div>
+              <div><div class="info-label">총 충전</div><div class="info-value">${creditData?.lifetime_purchased||0}C</div></div>
+              <div><div class="info-label">총 소비</div><div class="info-value">${creditData?.lifetime_spent||0}C</div></div>
+            </div>
+          </div>
+          <div class="modal-section">
+            <div class="modal-section-title">예측</div>
+            <div class="info-grid">
+              <div><div class="info-label">총 예측</div><div class="info-value">${predData?.total_predictions||0}회</div></div>
+              <div><div class="info-label">적중</div><div class="info-value">${predData?.correct_predictions||0}회 (${predData?.accuracy_pct||0}%)</div></div>
+            </div>
+          </div>
+          ${(badgeData||[]).length > 0 ? `<div class="modal-section"><div class="modal-section-title">뱃지 (${badgeData.length}개)</div><div style="display:flex;gap:8px;flex-wrap:wrap;">${badgeData.map(b=>`<span class="tier-badge tier-premium">${b.badge_id}</span>`).join('')}</div></div>` : ''}
+          <div class="modal-section">
+            <div class="modal-section-title">최근 활동</div>
+            ${(actData||[]).length > 0 ? actData.map(a=>`<div class="feed-item"><span class="feed-time">${formatRelativeTime(a.created_at)}</span><span class="feed-event">${a.event_name}</span></div>`).join('') : '<div class="empty-state"><p>활동 없음</p></div>'}
+          </div>
+          <div style="display:flex;gap:8px;margin-top:16px;">
+            <button class="action-btn ${profile?.is_banned?'success':'danger'}" onclick="toggleBan('${userId}', ${!profile?.is_banned})">
+              ${profile?.is_banned ? '차단 해제' : '🚫 차단'}
+            </button>
+            <button class="action-btn primary" onclick="showCreditGrantModal('${userId}', '${profile?.email||userId.slice(0,8)}')">
+              크레딧 지급
+            </button>
+          </div>
+        `;
+      } catch (err) {
+        body.innerHTML = `<div class="empty-state"><p>로딩 실패: ${err.message}</p></div>`;
+      }
+    }
+
+    async function toggleBan(userId, ban) {
+      const action = ban ? '차단' : '차단 해제';
+      if (!confirm(`이 유저를 ${action}하시겠습니까?`)) return;
+      try {
+        const updates = ban ? { is_banned: true, banned_at: new Date().toISOString() } : { is_banned: false, banned_at: null, ban_reason: null };
+        const { error } = await sb.from('profiles').update(updates).eq('id', userId);
+        if (error) throw error;
+        alert(`${action} 완료`);
+        hideModal('modal-user-detail');
+        if (tabDataLoaded.users) { tabDataLoaded.users = false; loadUsers(); }
+      } catch (err) { alert(`실패: ${err.message}`); }
+    }
+
+    // ── Credit Grant Modal ──
+    function showCreditGrantModal(userId, userLabel) {
+      hideModal('modal-user-detail');
+      document.getElementById('credit-grant-user-id').value = userId;
+      document.getElementById('credit-grant-user-info').textContent = userLabel;
+      document.getElementById('credit-grant-amount').value = '';
+      document.getElementById('credit-grant-memo').value = '';
+      showModal('modal-credit-grant');
+    }
+
+    async function executeGrantCredit() {
+      const userId = document.getElementById('credit-grant-user-id').value;
+      const amount = parseInt(document.getElementById('credit-grant-amount').value);
+      const memo = document.getElementById('credit-grant-memo').value.trim();
+      if (!amount || amount <= 0) { alert('금액을 입력하세요.'); return; }
+      if (!confirm(`${amount}C를 지급하시겠습니까?`)) return;
+      try {
+        // Get current balance
+        const { data: cur } = await sb.from('user_credits').select('balance').eq('user_id', userId).maybeSingle();
+        const newBalance = (cur?.balance || 0) + amount;
+        // Upsert credits
+        await sb.from('user_credits').upsert({ user_id: userId, balance: newBalance }, { onConflict: 'user_id' });
+        // Insert transaction
+        await sb.from('credit_transactions').insert({
+          user_id: userId, type: 'bonus', amount, balance_after: newBalance,
+          feature_type: 'admin_grant', description: memo || '관리자 지급',
+        });
+        alert(`${amount}C 지급 완료 (새 잔액: ${newBalance}C)`);
+        hideModal('modal-credit-grant');
+      } catch (err) { alert(`실패: ${err.message}`); }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // CREDITS TAB
+    // ══════════════════════════════════════════════════════════════
 
     async function loadCredits() {
       try {
         const [{ data: summary }, { data: recentTx }] = await Promise.all([
           sb.from('user_credits').select('balance, lifetime_purchased, lifetime_spent'),
-          sb.from('credit_transactions')
-            .select('created_at, user_id, type, amount, balance_after, feature_type')
-            .order('created_at', { ascending: false })
-            .limit(50),
+          sb.from('credit_transactions').select('created_at, user_id, type, amount, balance_after, feature_type').order('created_at',{ascending:false}).limit(50),
         ]);
-
-        const total = (summary || []).reduce((acc, c) => ({
-          balance: acc.balance + (c.balance || 0),
-          purchased: acc.purchased + (c.lifetime_purchased || 0),
-          spent: acc.spent + (c.lifetime_spent || 0),
-        }), { balance: 0, purchased: 0, spent: 0 });
-
+        const total = (summary||[]).reduce((a,c) => ({ balance:a.balance+(c.balance||0), purchased:a.purchased+(c.lifetime_purchased||0), spent:a.spent+(c.lifetime_spent||0) }), {balance:0,purchased:0,spent:0});
         document.getElementById('credit-metrics').innerHTML = `
-          <div class="metric-card">
-            <div class="metric-label">총 유통 잔액</div>
-            <div class="metric-value green">${total.balance.toLocaleString()}C</div>
-            <div class="metric-sub">${(total.balance * 100).toLocaleString()}원</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">총 구매(충전)</div>
-            <div class="metric-value blue">${total.purchased.toLocaleString()}C</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">총 소비</div>
-            <div class="metric-value red">${total.spent.toLocaleString()}C</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">소비율</div>
-            <div class="metric-value yellow">${total.balance + total.spent > 0 ? (total.spent / (total.balance + total.spent) * 100).toFixed(1) : 0}%</div>
-          </div>
+          <div class="metric-card"><div class="metric-label">총 유통 잔액</div><div class="metric-value green">${total.balance.toLocaleString()}C</div><div class="metric-sub">${(total.balance*100).toLocaleString()}원</div></div>
+          <div class="metric-card"><div class="metric-label">총 구매(충전)</div><div class="metric-value blue">${total.purchased.toLocaleString()}C</div></div>
+          <div class="metric-card"><div class="metric-label">총 소비</div><div class="metric-value red">${total.spent.toLocaleString()}C</div></div>
+          <div class="metric-card"><div class="metric-label">소비율</div><div class="metric-value yellow">${total.balance+total.spent>0?(total.spent/(total.balance+total.spent)*100).toFixed(1):0}%</div></div>
         `;
-
-        document.getElementById('credits-tbody').innerHTML = (recentTx || []).map(tx => `
+        document.getElementById('credits-tbody').innerHTML = (recentTx||[]).map(tx => `
           <tr>
             <td>${formatDateTime(tx.created_at)}</td>
-            <td>${tx.user_id?.slice(0, 8) || '-'}</td>
-            <td><span class="tier-badge ${tx.type === 'spend' ? 'tier-free' : 'tier-premium'}">
-              ${txTypeLabel(tx.type)}
-            </span></td>
-            <td style="color:${tx.amount >= 0 ? 'var(--green)' : 'var(--red)'}">${tx.amount > 0 ? '+' : ''}${tx.amount}C</td>
-            <td>${tx.balance_after || 0}C</td>
-            <td>${tx.feature_type || '-'}</td>
+            <td>${tx.user_id?.slice(0,8)||'-'}</td>
+            <td><span class="tier-badge ${tx.type==='spend'?'tier-free':'tier-premium'}">${txTypeLabel(tx.type)}</span></td>
+            <td style="color:${tx.amount>=0?'var(--green)':'var(--red)'}">${tx.amount>0?'+':''}${tx.amount}C</td>
+            <td>${tx.balance_after||0}C</td>
+            <td>${tx.feature_type||'-'}</td>
           </tr>
         `).join('');
+      } catch (err) { console.error('[Credits]', err); }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // REPORTS TAB (NEW)
+    // ══════════════════════════════════════════════════════════════
+
+    async function loadReports() {
+      try {
+        const { data: reports, error } = await sb.from('community_reports')
+          .select('*').order('created_at', { ascending: false }).limit(200);
+        if (error) throw error;
+
+        // Get reporter profiles
+        const reporterIds = [...new Set((reports||[]).map(r => r.reporter_id).filter(Boolean))];
+        let profileMap = {};
+        if (reporterIds.length > 0) {
+          const { data: profiles } = await sb.from('profiles').select('id, email').in('id', reporterIds.slice(0, 100));
+          (profiles||[]).forEach(p => { profileMap[p.id] = p.email || p.id.slice(0,8); });
+        }
+        allReports = (reports||[]).map(r => ({ ...r, reporter_email: profileMap[r.reporter_id] || r.reporter_id?.slice(0,8) || '-' }));
+
+        // Update counts
+        const counts = { all: allReports.length, pending: 0, resolved: 0, rejected: 0 };
+        allReports.forEach(r => { if (counts[r.status] !== undefined) counts[r.status]++; });
+        document.getElementById('report-count-all').textContent = counts.all;
+        document.getElementById('report-count-pending').textContent = counts.pending;
+        document.getElementById('report-count-resolved').textContent = counts.resolved;
+        document.getElementById('report-count-rejected').textContent = counts.rejected;
+
+        const rate = counts.all > 0 ? ((counts.resolved / counts.all) * 100).toFixed(0) : 0;
+        document.getElementById('report-summary').innerHTML = `총 <strong>${counts.all}건</strong> | 대기 <strong>${counts.pending}건</strong> | 처리율 <strong>${rate}%</strong>`;
+
+        renderReportsTable();
       } catch (err) {
-        console.error('[Credits]', err);
+        console.error('[Reports]', err);
+        document.getElementById('reports-tbody').innerHTML = `<tr><td colspan="7"><div class="empty-state"><p>신고 데이터 로딩 실패: ${err.message}</p></div></td></tr>`;
       }
     }
 
-    // ── ENGAGEMENT TAB ──
+    function renderReportsTable() {
+      const filtered = currentReportFilter === 'all' ? allReports : allReports.filter(r => r.status === currentReportFilter);
+      document.getElementById('reports-tbody').innerHTML = filtered.length > 0 ? filtered.map(r => {
+        const isPending = r.status === 'pending';
+        const isUrgent = isPending && (Date.now() - new Date(r.created_at).getTime()) > 86400000;
+        const reasonLabels = { spam:'스팸', inappropriate:'부적절', abuse:'욕설', misleading:'허위', illegal:'불법', harassment:'괴롭힘', leading:'유도', fraud:'사기', other:'기타' };
+        const statusLabels = { pending:'대기', resolved:'처리', rejected:'거부' };
+        const statusColors = { pending:'var(--yellow)', resolved:'var(--green)', rejected:'var(--text3)' };
+        return `<tr class="clickable" onclick="showReportDetail('${r.id}')">
+          <td>${formatRelativeTime(r.created_at)}</td>
+          <td>${r.reporter_email}</td>
+          <td>${r.target_type||'post'} #${(r.target_id||'').slice(0,8)}</td>
+          <td>${reasonLabels[r.reason]||r.reason||'-'}</td>
+          <td style="color:${statusColors[r.status]||'var(--text3)'}">${statusLabels[r.status]||r.status}</td>
+          <td>${isUrgent ? '<span class="urgent-badge">!!</span>' : ''}</td>
+          <td>${isPending ? `<button class="action-btn success" onclick="event.stopPropagation();resolveReport('${r.id}','resolved')">승인</button> <button class="action-btn danger" onclick="event.stopPropagation();resolveReport('${r.id}','rejected')">거부</button>` : '-'}</td>
+        </tr>`;
+      }).join('') : '<tr><td colspan="7"><div class="empty-state"><p>신고가 없습니다</p></div></td></tr>';
+    }
+
+    async function showReportDetail(reportId) {
+      showModal('modal-report-detail');
+      const body = document.getElementById('modal-report-body');
+      body.innerHTML = '<div class="loading-overlay"><div class="spinner"></div></div>';
+      try {
+        const report = allReports.find(r => r.id === reportId);
+        if (!report) throw new Error('신고를 찾을 수 없습니다');
+        let contentHtml = '-';
+        if (report.target_id) {
+          const table = report.target_type === 'comment' ? 'community_comments' : 'community_posts';
+          const { data: content } = await sb.from(table).select('*').eq('id', report.target_id).maybeSingle();
+          contentHtml = content?.content || '(삭제됨)';
+        }
+        const reasonLabels = { spam:'스팸', inappropriate:'부적절', abuse:'욕설', misleading:'허위', illegal:'불법', harassment:'괴롭힘', leading:'유도', fraud:'사기', other:'기타' };
+        body.innerHTML = `
+          <div class="modal-section"><div class="modal-section-title">신고 정보</div>
+            <div class="info-grid">
+              <div><div class="info-label">신고자</div><div class="info-value">${report.reporter_email}</div></div>
+              <div><div class="info-label">사유</div><div class="info-value">${reasonLabels[report.reason]||report.reason}</div></div>
+              <div><div class="info-label">대상</div><div class="info-value">${report.target_type||'post'}</div></div>
+              <div><div class="info-label">시간</div><div class="info-value">${formatRelativeTime(report.created_at)}</div></div>
+            </div>
+            ${report.description ? `<div style="margin-top:8px;padding:10px;background:var(--surface);border-radius:8px;font-size:13px;">${report.description}</div>` : ''}
+          </div>
+          <div class="modal-section"><div class="modal-section-title">신고된 콘텐츠</div>
+            <div style="padding:12px;background:var(--surface);border-radius:8px;font-size:14px;line-height:1.5;">${contentHtml}</div>
+          </div>
+          ${report.status === 'pending' ? `<div style="display:flex;gap:8px;margin-top:16px;">
+            <button class="action-btn success" onclick="resolveReport('${report.id}','resolved');hideModal('modal-report-detail')">승인 (처리)</button>
+            <button class="action-btn danger" onclick="resolveReport('${report.id}','rejected');hideModal('modal-report-detail')">거부</button>
+            <button class="action-btn danger" onclick="deleteReportedContent('${report.target_id}','${report.target_type||'post'}','${report.id}')">콘텐츠 삭제</button>
+          </div>` : `<div style="margin-top:16px;color:var(--text3);">이미 처리된 신고입니다 (${report.status})</div>`}
+        `;
+      } catch (err) {
+        body.innerHTML = `<div class="empty-state"><p>${err.message}</p></div>`;
+      }
+    }
+
+    async function resolveReport(reportId, status) {
+      try {
+        const { error } = await sb.from('community_reports').update({ status, updated_at: new Date().toISOString() }).eq('id', reportId);
+        if (error) throw error;
+        const r = allReports.find(r => r.id === reportId);
+        if (r) r.status = status;
+        renderReportsTable();
+        // Update counts
+        const counts = { all: allReports.length, pending: 0, resolved: 0, rejected: 0 };
+        allReports.forEach(r => { if (counts[r.status] !== undefined) counts[r.status]++; });
+        document.getElementById('report-count-all').textContent = counts.all;
+        document.getElementById('report-count-pending').textContent = counts.pending;
+        document.getElementById('report-count-resolved').textContent = counts.resolved;
+        document.getElementById('report-count-rejected').textContent = counts.rejected;
+      } catch (err) { alert(`실패: ${err.message}`); }
+    }
+
+    async function deleteReportedContent(targetId, targetType, reportId) {
+      if (!confirm('이 콘텐츠를 삭제하시겠습니까?')) return;
+      try {
+        const table = targetType === 'comment' ? 'community_comments' : 'community_posts';
+        const { error } = await sb.from(table).delete().eq('id', targetId);
+        if (error) throw error;
+        await resolveReport(reportId, 'resolved');
+        hideModal('modal-report-detail');
+        alert('콘텐츠가 삭제되었습니다.');
+      } catch (err) { alert(`실패: ${err.message}`); }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // LOUNGE TAB (NEW)
+    // ══════════════════════════════════════════════════════════════
+
+    async function loadLoungePosts() {
+      try {
+        const { data: posts, error } = await sb.from('community_posts')
+          .select('*').order('created_at', { ascending: false }).limit(200);
+        if (error) throw error;
+        const userIds = [...new Set((posts||[]).map(p => p.user_id).filter(Boolean))];
+        let profileMap = {};
+        if (userIds.length > 0) {
+          const { data: profiles } = await sb.from('profiles').select('id, email').in('id', userIds.slice(0, 100));
+          (profiles||[]).forEach(p => { profileMap[p.id] = p.email || p.id.slice(0,8); });
+        }
+        allPosts = (posts||[]).map(p => ({ ...p, author_email: profileMap[p.user_id] || p.user_id?.slice(0,8) || '-' }));
+        document.getElementById('lounge-post-count').textContent = allPosts.length;
+        if (currentLoungeSegment === 'posts') renderLoungeContent();
+      } catch (err) { console.error('[Lounge Posts]', err); }
+    }
+
+    async function loadGatherings() {
+      try {
+        const { data: gatherings, error } = await sb.from('gatherings')
+          .select('*').order('created_at', { ascending: false }).limit(100);
+        if (error) throw error;
+        allGatherings = gatherings || [];
+        document.getElementById('lounge-gathering-count').textContent = allGatherings.length;
+        if (currentLoungeSegment === 'gatherings') renderLoungeContent();
+      } catch (err) { console.error('[Gatherings]', err); }
+    }
+
+    function renderLoungeContent() {
+      const container = document.getElementById('lounge-content');
+      selectedPosts = new Set();
+      updateBulkBar();
+
+      if (currentLoungeSegment === 'posts') {
+        const activeFilter = document.querySelector('#lounge-filters .filter-chip.active')?.dataset.filter || 'all';
+        let filtered = allPosts;
+        if (activeFilter === 'pinned') filtered = allPosts.filter(p => p.is_pinned);
+        if (activeFilter === 'reported') filtered = allPosts.filter(p => (p.report_count||0) > 0);
+
+        container.innerHTML = filtered.length > 0 ? filtered.map(p => `
+          <div class="post-card" data-post-id="${p.id}">
+            <div class="post-card-header">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <input type="checkbox" onchange="togglePostSelect('${p.id}', this.checked)" />
+                <span class="post-card-meta">${p.author_email} · ${formatRelativeTime(p.created_at)}</span>
+                ${p.is_pinned ? '<span class="tier-badge tier-premium">📌 고정</span>' : ''}
+                ${(p.report_count||0)>0 ? `<span class="urgent-badge">신고 ${p.report_count}</span>` : ''}
+              </div>
+              <span class="post-card-meta">${p.category||''} · 좋아요 ${p.likes_count||0} · 댓글 ${p.comments_count||0}</span>
+            </div>
+            <div class="post-card-content">${(p.content||'').slice(0,200)}${(p.content||'').length>200?'...':''}</div>
+            <div class="post-actions">
+              <button class="action-btn ${p.is_pinned?'':'success'}" onclick="togglePin('${p.id}', ${!p.is_pinned})">${p.is_pinned?'고정 해제':'📌 고정'}</button>
+              <button class="action-btn danger" onclick="deletePost('${p.id}')">삭제</button>
+            </div>
+          </div>
+        `).join('') : '<div class="empty-state"><p>게시글이 없습니다</p></div>';
+      } else {
+        const statusLabels = { open:'모집중', closed:'마감', cancelled:'취소', completed:'완료' };
+        const statusColors = { open:'var(--green)', closed:'var(--yellow)', cancelled:'var(--red)', completed:'var(--text3)' };
+        container.innerHTML = allGatherings.length > 0 ? allGatherings.map(g => `
+          <div class="post-card">
+            <div class="post-card-header">
+              <div>
+                <strong>${g.title||'(제목 없음)'}</strong>
+                <span style="color:${statusColors[g.status]||'var(--text3)'};font-size:12px;margin-left:8px;">${statusLabels[g.status]||g.status}</span>
+              </div>
+              <span class="post-card-meta">${g.category||''} · ${g.location_type||'offline'}</span>
+            </div>
+            <div class="post-card-content">${g.description||'-'}</div>
+            <div class="post-card-meta" style="margin-bottom:8px;">참여 ${g.current_capacity||0}/${g.max_capacity||0} · ${g.location||'-'} · ${g.event_date ? new Date(g.event_date).toLocaleDateString('ko') : '-'}</div>
+            <div class="post-actions">
+              ${g.status==='open' ? `<button class="action-btn danger" onclick="cancelGathering('${g.id}')">취소</button>` : ''}
+            </div>
+          </div>
+        `).join('') : '<div class="empty-state"><p>모임이 없습니다</p></div>';
+      }
+    }
+
+    function togglePostSelect(postId, checked) {
+      if (checked) selectedPosts.add(postId); else selectedPosts.delete(postId);
+      updateBulkBar();
+    }
+
+    function updateBulkBar() {
+      const bar = document.getElementById('bulk-actions');
+      if (selectedPosts.size > 0) { bar.classList.remove('hidden'); document.getElementById('bulk-count').textContent = `${selectedPosts.size}개 선택`; }
+      else { bar.classList.add('hidden'); }
+    }
+
+    async function togglePin(postId, pin) {
+      try {
+        const { error } = await sb.from('community_posts').update({ is_pinned: pin }).eq('id', postId);
+        if (error) throw error;
+        const p = allPosts.find(p => p.id === postId); if (p) p.is_pinned = pin;
+        renderLoungeContent();
+      } catch (err) { alert(`실패: ${err.message}`); }
+    }
+
+    async function deletePost(postId) {
+      if (!confirm('이 게시글을 삭제하시겠습니까?')) return;
+      try {
+        const { error } = await sb.from('community_posts').delete().eq('id', postId);
+        if (error) throw error;
+        allPosts = allPosts.filter(p => p.id !== postId);
+        document.getElementById('lounge-post-count').textContent = allPosts.length;
+        renderLoungeContent();
+      } catch (err) { alert(`실패: ${err.message}`); }
+    }
+
+    async function cancelGathering(gatheringId) {
+      if (!confirm('이 모임을 취소하시겠습니까?')) return;
+      try {
+        const { error } = await sb.from('gatherings').update({ status: 'cancelled' }).eq('id', gatheringId);
+        if (error) throw error;
+        const g = allGatherings.find(g => g.id === gatheringId); if (g) g.status = 'cancelled';
+        renderLoungeContent();
+      } catch (err) { alert(`실패: ${err.message}`); }
+    }
+
+    async function bulkPin() {
+      if (!confirm(`${selectedPosts.size}개 게시글을 고정하시겠습니까?`)) return;
+      try {
+        for (const id of selectedPosts) {
+          await sb.from('community_posts').update({ is_pinned: true }).eq('id', id);
+          const p = allPosts.find(p => p.id === id); if (p) p.is_pinned = true;
+        }
+        selectedPosts.clear(); renderLoungeContent();
+      } catch (err) { alert(`실패: ${err.message}`); }
+    }
+
+    async function bulkDelete() {
+      if (!confirm(`${selectedPosts.size}개 게시글을 삭제하시겠습니까? 되돌릴 수 없습니다.`)) return;
+      try {
+        for (const id of selectedPosts) {
+          await sb.from('community_posts').delete().eq('id', id);
+        }
+        allPosts = allPosts.filter(p => !selectedPosts.has(p.id));
+        document.getElementById('lounge-post-count').textContent = allPosts.length;
+        selectedPosts.clear(); renderLoungeContent();
+      } catch (err) { alert(`실패: ${err.message}`); }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // ENGAGEMENT TAB
+    // ══════════════════════════════════════════════════════════════
 
     async function loadEngagement() {
       try {
-        const [
-          { data: predStats },
-          { count: totalVotes },
-          { data: badges },
-          { data: recentPolls },
-        ] = await Promise.all([
+        const [{ data: predStats }, { count: totalVotes }, { data: badges }, { data: recentPolls }] = await Promise.all([
           sb.from('prediction_user_stats').select('accuracy_pct, total_predictions, correct_predictions'),
           sb.from('prediction_votes').select('*', { count: 'exact', head: true }),
           sb.from('user_badges').select('badge_id'),
           sb.from('prediction_polls').select('*').order('date', { ascending: false }).limit(7),
         ]);
-
-        const avgAccuracy = (predStats || []).length > 0
-          ? ((predStats || []).reduce((s, p) => s + (p.accuracy_pct || 0), 0) / predStats.length).toFixed(1)
-          : 0;
-
-        const badgeCounts = {};
-        (badges || []).forEach(b => { badgeCounts[b.badge_id] = (badgeCounts[b.badge_id] || 0) + 1; });
-
+        const avgAcc = (predStats||[]).length > 0 ? ((predStats||[]).reduce((s,p)=>s+(p.accuracy_pct||0),0)/predStats.length).toFixed(1) : 0;
+        const badgeCounts = {}; (badges||[]).forEach(b => { badgeCounts[b.badge_id]=(badgeCounts[b.badge_id]||0)+1; });
         document.getElementById('engagement-metrics').innerHTML = `
-          <div class="metric-card">
-            <div class="metric-label">총 예측 투표</div>
-            <div class="metric-value blue">${(totalVotes || 0).toLocaleString()}</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">평균 적중률</div>
-            <div class="metric-value green">${avgAccuracy}%</div>
-            <div class="metric-sub">${(predStats || []).length}명 참여</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">발급된 뱃지</div>
-            <div class="metric-value yellow">${(badges || []).length}</div>
-            <div class="metric-sub">${Object.keys(badgeCounts).length}종</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">최근 퀴즈/예측</div>
-            <div class="metric-value">${(recentPolls || []).length}</div>
-            <div class="metric-sub">최근 7일</div>
-          </div>
+          <div class="metric-card"><div class="metric-label">총 예측 투표</div><div class="metric-value blue">${(totalVotes||0).toLocaleString()}</div></div>
+          <div class="metric-card"><div class="metric-label">평균 적중률</div><div class="metric-value green">${avgAcc}%</div><div class="metric-sub">${(predStats||[]).length}명 참여</div></div>
+          <div class="metric-card"><div class="metric-label">발급된 뱃지</div><div class="metric-value yellow">${(badges||[]).length}</div><div class="metric-sub">${Object.keys(badgeCounts).length}종</div></div>
+          <div class="metric-card"><div class="metric-label">최근 퀴즈/예측</div><div class="metric-value">${(recentPolls||[]).length}</div><div class="metric-sub">최근 7일</div></div>
         `;
-
-        // Prediction chart
-        renderPredictionChart(recentPolls || []);
-
-        // Streak distribution (simplified)
-        renderStreakChart(predStats || []);
-      } catch (err) {
-        console.error('[Engagement]', err);
-      }
+        renderPredictionChart(recentPolls||[]);
+        renderStreakChart(predStats||[]);
+      } catch (err) { console.error('[Engagement]', err); }
     }
 
     function renderPredictionChart(polls) {
-      const labels = polls.map(p => p.date?.slice(5) || '?').reverse();
-      // Simplified: just show poll count per day
+      const labels = polls.map(p=>p.date?.slice(5)||'?').reverse();
       if (charts.predictions) charts.predictions.destroy();
       charts.predictions = new Chart(document.getElementById('chart-predictions'), {
-        type: 'bar',
-        data: {
-          labels,
-          datasets: [{
-            label: '예측 질문',
-            data: labels.map(() => 1),
-            backgroundColor: 'rgba(33, 150, 243, 0.6)',
-            borderRadius: 4,
-          }]
-        },
-        options: chartOptions('예측'),
+        type:'bar', data:{labels, datasets:[{label:'예측 질문',data:labels.map(()=>1),backgroundColor:'rgba(33,150,243,0.6)',borderRadius:4}]}, options:chartOptions(),
       });
     }
 
     function renderStreakChart(predStats) {
-      // Group by prediction ranges
-      const ranges = { '0-5': 0, '6-20': 0, '21-50': 0, '51-100': 0, '100+': 0 };
-      predStats.forEach(p => {
-        const t = p.total_predictions || 0;
-        if (t <= 5) ranges['0-5']++;
-        else if (t <= 20) ranges['6-20']++;
-        else if (t <= 50) ranges['21-50']++;
-        else if (t <= 100) ranges['51-100']++;
-        else ranges['100+']++;
-      });
-
+      const ranges = {'0-5':0,'6-20':0,'21-50':0,'51-100':0,'100+':0};
+      predStats.forEach(p => { const t=p.total_predictions||0; if(t<=5)ranges['0-5']++;else if(t<=20)ranges['6-20']++;else if(t<=50)ranges['21-50']++;else if(t<=100)ranges['51-100']++;else ranges['100+']++; });
       if (charts.streaks) charts.streaks.destroy();
       charts.streaks = new Chart(document.getElementById('chart-streaks'), {
-        type: 'doughnut',
-        data: {
-          labels: Object.keys(ranges),
-          datasets: [{
-            data: Object.values(ranges),
-            backgroundColor: ['#9E9E9E', '#2196F3', '#4CAF50', '#FFC107', '#CF6679'],
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'right', labels: { color: '#9E9E9E', padding: 12 } },
-          },
-        },
+        type:'doughnut', data:{labels:Object.keys(ranges), datasets:[{data:Object.values(ranges),backgroundColor:['#9E9E9E','#2196F3','#4CAF50','#FFC107','#CF6679']}]},
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#9E9E9E',padding:12}}}},
       });
     }
 
-    // ── CONTENT TAB ──
+    // ══════════════════════════════════════════════════════════════
+    // CONTENT TAB
+    // ══════════════════════════════════════════════════════════════
 
     async function loadContent() {
       try {
-        const [
-          { data: cards, count: cardCount },
-          { count: postCount },
-          { data: quizzes },
-        ] = await Promise.all([
-          sb.from('context_cards').select('*', { count: 'exact' }).order('date', { ascending: false }).limit(20),
-          sb.from('community_posts').select('*', { count: 'exact', head: true }),
-          sb.from('daily_quizzes').select('*', { count: 'exact', head: true }),
+        const [{ data: cards, count: cardCount }, { count: postCount }, { count: quizCount }] = await Promise.all([
+          sb.from('context_cards').select('*', { count:'exact' }).order('date',{ascending:false}).limit(20),
+          sb.from('community_posts').select('*', { count:'exact', head:true }),
+          sb.from('daily_quizzes').select('*', { count:'exact', head:true }),
+        ]);
+        document.getElementById('content-metrics').innerHTML = `
+          <div class="metric-card"><div class="metric-label">맥락 카드</div><div class="metric-value green">${cardCount||0}</div></div>
+          <div class="metric-card"><div class="metric-label">커뮤니티 게시글</div><div class="metric-value blue">${(postCount||0).toLocaleString()}</div></div>
+          <div class="metric-card"><div class="metric-label">퀴즈</div><div class="metric-value yellow">${quizCount||0}</div></div>
+        `;
+        document.getElementById('context-tbody').innerHTML = (cards||[]).map(c => `
+          <tr><td>${c.date||'-'}</td><td>${c.headline||'(제목 없음)'}</td><td><span class="tier-badge ${c.sentiment==='calm'?'tier-premium':'tier-free'}">${c.sentiment||'-'}</span></td><td>-</td></tr>
+        `).join('');
+      } catch (err) { console.error('[Content]', err); }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // ANALYTICS TAB (Enhanced)
+    // ══════════════════════════════════════════════════════════════
+
+    async function loadEnhancedAnalytics() {
+      try {
+        // Fetch data for retention, trends, distributions
+        const now = new Date();
+        const d7ago = new Date(now.getTime() - 7*86400000).toISOString();
+
+        const [{ data: allProfiles }, { data: recentEvents }] = await Promise.all([
+          sb.from('profiles').select('id, created_at, last_active_date, tier, plan_type, total_assets'),
+          sb.from('analytics_events').select('user_id, created_at').gte('created_at', d7ago).limit(5000),
         ]);
 
-        document.getElementById('content-metrics').innerHTML = `
-          <div class="metric-card">
-            <div class="metric-label">맥락 카드</div>
-            <div class="metric-value green">${cardCount || 0}</div>
-            <div class="metric-sub">생성된 카드 수</div>
+        // ── Retention ──
+        const retentionEl = document.getElementById('retention-bars');
+        const profiles = allProfiles || [];
+        const computeRetention = (days) => {
+          const cutoff = new Date(now.getTime() - days*86400000);
+          const eligible = profiles.filter(p => new Date(p.created_at) <= cutoff);
+          if (eligible.length === 0) return { rate: 0, eligible: 0, retained: 0 };
+          const retained = eligible.filter(p => {
+            if (!p.last_active_date) return false;
+            const signup = new Date(p.created_at);
+            const lastActive = new Date(p.last_active_date);
+            return (lastActive - signup) >= days * 86400000;
+          });
+          return { rate: (retained.length / eligible.length * 100).toFixed(1), eligible: eligible.length, retained: retained.length };
+        };
+        const d1 = computeRetention(1), d7 = computeRetention(7), d30 = computeRetention(30);
+        const retentionColors = (rate) => rate >= 40 ? '#4CAF50' : rate >= 20 ? '#FFC107' : '#CF6679';
+        retentionEl.innerHTML = [
+          { label: 'D1 리텐션', ...d1 },
+          { label: 'D7 리텐션', ...d7 },
+          { label: 'D30 리텐션', ...d30 },
+        ].map(r => `
+          <div class="retention-bar">
+            <label><span>${r.label} (${r.retained}/${r.eligible}명)</span><span>${r.rate}%</span></label>
+            <div class="retention-track"><div class="retention-fill" style="width:${Math.max(r.rate,3)}%;background:${retentionColors(parseFloat(r.rate))};">${r.rate}%</div></div>
           </div>
-          <div class="metric-card">
-            <div class="metric-label">커뮤니티 게시글</div>
-            <div class="metric-value blue">${(postCount || 0).toLocaleString()}</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">퀴즈</div>
-            <div class="metric-value yellow">${quizzes?.count || 0}</div>
-          </div>
-        `;
-
-        document.getElementById('context-tbody').innerHTML = (cards || []).map(c => `
-          <tr>
-            <td>${c.date || '-'}</td>
-            <td>${c.headline || '(제목 없음)'}</td>
-            <td><span class="tier-badge ${c.sentiment === 'calm' ? 'tier-premium' : 'tier-free'}">${c.sentiment || '-'}</span></td>
-            <td>-</td>
-          </tr>
         `).join('');
-      } catch (err) {
-        console.error('[Content]', err);
-      }
-    }
 
-    // ── ANALYTICS TAB ──
+        // ── 7-day Trend ──
+        const trendDays = [];
+        for (let i = 6; i >= 0; i--) {
+          const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+          trendDays.push(d.toISOString().split('T')[0]);
+        }
+        const signupsByDay = {}; profiles.forEach(p => { const d = p.created_at?.split('T')[0]; if (d) signupsByDay[d] = (signupsByDay[d]||0)+1; });
+        const dauByDay = {};
+        (recentEvents||[]).forEach(e => {
+          const d = e.created_at?.split('T')[0];
+          if (!d) return;
+          if (!dauByDay[d]) dauByDay[d] = new Set();
+          dauByDay[d].add(e.user_id);
+        });
 
-    async function loadAnalytics() {
-      try {
-        const { data: events } = await sb
-          .from('analytics_events')
-          .select('created_at, user_id, event_name, properties')
-          .order('created_at', { ascending: false })
-          .limit(100);
+        if (charts.trend) charts.trend.destroy();
+        charts.trend = new Chart(document.getElementById('chart-trend'), {
+          type: 'bar',
+          data: {
+            labels: trendDays.map(d => d.slice(5)),
+            datasets: [
+              { label: '가입', data: trendDays.map(d => signupsByDay[d]||0), backgroundColor: 'rgba(76,175,80,0.6)', borderRadius: 4, order: 2 },
+              { label: 'DAU', data: trendDays.map(d => dauByDay[d]?.size||0), type: 'line', borderColor: '#2196F3', backgroundColor: 'rgba(33,150,243,0.1)', fill: true, tension: 0.3, order: 1 },
+            ],
+          },
+          options: chartOptions(),
+        });
 
-        document.getElementById('analytics-tbody').innerHTML = (events || []).map(e => `
-          <tr>
-            <td>${formatDateTime(e.created_at)}</td>
-            <td>${e.user_id?.slice(0, 8) || 'anon'}</td>
-            <td><strong>${e.event_name}</strong></td>
-            <td style="font-size:11px; color:var(--text3); max-width:300px; overflow:hidden; text-overflow:ellipsis;">${JSON.stringify(e.properties || {}).slice(0, 80)}</td>
-          </tr>
-        `).join('') || '<tr><td colspan="4"><div class="empty-state"><p>아직 이벤트가 없습니다</p></div></td></tr>';
+        // ── Distributions ──
+        // Tier
+        const tierCounts = {}; profiles.forEach(p => { const t = p.tier||'SILVER'; tierCounts[t]=(tierCounts[t]||0)+1; });
+        if (charts.tierDist) charts.tierDist.destroy();
+        charts.tierDist = new Chart(document.getElementById('chart-tier-dist'), {
+          type:'doughnut', data:{labels:Object.keys(tierCounts), datasets:[{data:Object.values(tierCounts),backgroundColor:['#9E9E9E','#FFC107','#E0E0E0','#2196F3']}]},
+          options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}},
+        });
+        // Plan
+        const planCounts = {}; profiles.forEach(p => { const pl = p.plan_type||'free'; planCounts[pl]=(planCounts[pl]||0)+1; });
+        if (charts.planDist) charts.planDist.destroy();
+        charts.planDist = new Chart(document.getElementById('chart-plan-dist'), {
+          type:'doughnut', data:{labels:Object.keys(planCounts), datasets:[{data:Object.values(planCounts),backgroundColor:['#9E9E9E','#FFC107','#4CAF50']}]},
+          options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}},
+        });
+        // Asset ranges
+        const assetRanges = {'0':0,'~1천만':0,'~5천만':0,'~1억':0,'~5억':0,'5억+':0};
+        profiles.forEach(p => {
+          const a = p.total_assets||0;
+          if(a<=0)assetRanges['0']++;else if(a<=10000000)assetRanges['~1천만']++;else if(a<=50000000)assetRanges['~5천만']++;else if(a<=100000000)assetRanges['~1억']++;else if(a<=500000000)assetRanges['~5억']++;else assetRanges['5억+']++;
+        });
+        if (charts.assetDist) charts.assetDist.destroy();
+        charts.assetDist = new Chart(document.getElementById('chart-asset-dist'), {
+          type:'doughnut', data:{labels:Object.keys(assetRanges), datasets:[{data:Object.values(assetRanges),backgroundColor:['#666','#9E9E9E','#2196F3','#4CAF50','#FFC107','#CF6679']}]},
+          options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}},
+        });
+
+        // ── Activity Feed ──
+        const feedEl = document.getElementById('activity-feed');
+        const events = recentEvents || [];
+        const groups = { now: [], hour: [], today: [], yesterday: [], older: [] };
+        events.slice(0, 50).forEach(e => {
+          const diff = Date.now() - new Date(e.created_at).getTime();
+          if (diff < 300000) groups.now.push(e);
+          else if (diff < 3600000) groups.hour.push(e);
+          else if (diff < 86400000) groups.today.push(e);
+          else if (diff < 172800000) groups.yesterday.push(e);
+          else groups.older.push(e);
+        });
+        const groupLabels = { now: '방금', hour: '1시간 이내', today: '오늘', yesterday: '어제', older: '이전' };
+        feedEl.innerHTML = Object.entries(groups).filter(([,items]) => items.length > 0).map(([key, items]) => `
+          <div class="feed-group">
+            <div class="feed-group-label">${groupLabels[key]} (${items.length})</div>
+            ${items.slice(0, 10).map(e => `<div class="feed-item"><span class="feed-time">${formatRelativeTime(e.created_at)}</span><span class="feed-event"><strong>${e.user_id?.slice(0,6)||'anon'}</strong></span></div>`).join('')}
+          </div>
+        `).join('') || '<div class="empty-state"><p>활동 데이터가 없습니다</p></div>';
       } catch (err) {
         console.error('[Analytics]', err);
+        document.getElementById('retention-bars').innerHTML = `<div class="empty-state"><p>분석 로딩 실패: ${err.message}</p></div>`;
       }
     }
+
+    // ══════════════════════════════════════════════════════════════
+    // EVENT LOG TAB (renamed from old Analytics)
+    // ══════════════════════════════════════════════════════════════
+
+    async function loadEventLog() {
+      try {
+        const { data: events } = await sb.from('analytics_events')
+          .select('created_at, user_id, event_name, properties')
+          .order('created_at', { ascending: false }).limit(100);
+        document.getElementById('eventlog-tbody').innerHTML = (events||[]).map(e => `
+          <tr>
+            <td>${formatDateTime(e.created_at)}</td>
+            <td>${e.user_id?.slice(0,8)||'anon'}</td>
+            <td><strong>${e.event_name}</strong></td>
+            <td style="font-size:11px;color:var(--text3);max-width:300px;overflow:hidden;text-overflow:ellipsis;">${JSON.stringify(e.properties||{}).slice(0,80)}</td>
+          </tr>
+        `).join('') || '<tr><td colspan="4"><div class="empty-state"><p>이벤트가 없습니다</p></div></td></tr>';
+      } catch (err) { console.error('[EventLog]', err); }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // MODAL SYSTEM
+    // ══════════════════════════════════════════════════════════════
+
+    function showModal(id) { document.getElementById(id).classList.add('visible'); }
+    function hideModal(id) { document.getElementById(id).classList.remove('visible'); }
 
     // ══════════════════════════════════════════════════════════════
     // UTILITIES
     // ══════════════════════════════════════════════════════════════
 
+    function renderDelta(today, yesterday, suffix) {
+      const diff = today - yesterday;
+      if (diff > 0) return `<div class="metric-delta up">▲ +${diff.toLocaleString()}${suffix}</div>`;
+      if (diff < 0) return `<div class="metric-delta down">▼ ${diff.toLocaleString()}${suffix}</div>`;
+      return `<div class="metric-delta flat">— 0${suffix}</div>`;
+    }
+
+    function getActivityDotColor(lastActiveDate) {
+      if (!lastActiveDate) return 'red';
+      const diffDays = Math.floor((Date.now() - new Date(lastActiveDate).getTime()) / 86400000);
+      if (diffDays <= 1) return 'green';
+      if (diffDays <= 7) return 'yellow';
+      return 'gray';
+    }
+
+    function formatRelativeTime(iso) {
+      if (!iso) return '-';
+      const diff = Date.now() - new Date(iso).getTime();
+      if (diff < 60000) return '방금';
+      if (diff < 3600000) return `${Math.floor(diff/60000)}분 전`;
+      if (diff < 86400000) return `${Math.floor(diff/3600000)}시간 전`;
+      if (diff < 172800000) return '어제';
+      return `${Math.floor(diff/86400000)}일 전`;
+    }
+
     function formatDate(iso) {
       if (!iso) return '-';
       const d = new Date(iso);
-      return `${d.getMonth() + 1}/${d.getDate()}`;
+      return `${d.getMonth()+1}/${d.getDate()}`;
     }
 
     function formatDateTime(iso) {
       if (!iso) return '-';
       const d = new Date(iso);
-      return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
+      return `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
     }
 
     function formatKRW(amount) {
       if (!amount) return '-';
-      if (amount >= 100000000) return `${(amount / 100000000).toFixed(1)}억`;
-      if (amount >= 10000) return `${(amount / 10000).toFixed(0)}만원`;
+      if (amount >= 100000000) return `${(amount/100000000).toFixed(1)}억`;
+      if (amount >= 10000) return `${(amount/10000).toFixed(0)}만원`;
       return `${amount.toLocaleString()}원`;
     }
 
     function txTypeLabel(type) {
-      const labels = { bonus: '지급', spend: '소비', purchase: '충전', refund: '환불' };
-      return labels[type] || type;
+      return { bonus:'지급', spend:'소비', purchase:'충전', refund:'환불' }[type] || type;
     }
 
-    function chartOptions(title) {
+    function chartOptions() {
       return {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-        },
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
         scales: {
           x: { ticks: { color: '#666' }, grid: { color: 'rgba(51,51,51,0.5)' } },
           y: { ticks: { color: '#666' }, grid: { color: 'rgba(51,51,51,0.5)' } },
