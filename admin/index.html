@@ -798,6 +798,12 @@
             <div id="wbs-ai-decisions">
               <div class="loading-overlay"><div class="spinner"></div></div>
             </div>
+
+            <!-- 목표 vs 실제 추세 그래프 -->
+            <div style="background: var(--surface2); padding: 16px; border-radius: 8px; margin-top: 24px;">
+              <h3 style="font-size: 15px; margin-bottom: 16px; color: var(--text);">📊 목표 vs 실제 추세 그래프</h3>
+              <canvas id="wbs-trend-chart" style="max-height: 300px;"></canvas>
+            </div>
           </div>
         </div>
 
@@ -2302,10 +2308,129 @@
           </div>
         `;
 
+        // 추세 그래프 렌더링
+        renderTrendChart(currentMAU, targetMAU);
+
       } catch (err) {
         console.error('[WBS]', err);
         document.getElementById('wbs-live-kpis').innerHTML = `<div class="empty-state"><p>데이터 로딩 실패: ${err.message}</p></div>`;
       }
+    }
+
+    // 목표 vs 실제 추세 그래프 렌더링 함수
+    let trendChartInstance = null;
+    function renderTrendChart(currentMAU, targetMAU) {
+      const canvas = document.getElementById('wbs-trend-chart');
+      if (!canvas) return;
+
+      // 기존 차트 파괴
+      if (trendChartInstance) {
+        trendChartInstance.destroy();
+      }
+
+      // 시뮬레이션 데이터 (목표선)
+      const weeks = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10', 'W11', 'W12', 'W13', 'W14', 'W15', 'W16'];
+      const simulationData = [
+        31, 62, 94, 125, 156, 188, 219, 250, 281, 313, 344, 375, 406, 438, 469, 500
+      ];
+
+      // 실제 데이터 (현재는 currentMAU만 있으므로 예시 데이터)
+      // 실제 운영 시에는 주차별 실제 MAU를 DB에서 가져와야 함
+      const actualData = [
+        currentMAU, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null
+      ];
+
+      const ctx = canvas.getContext('2d');
+      trendChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: weeks,
+          datasets: [
+            {
+              label: '시뮬레이션 (목표)',
+              data: simulationData,
+              borderColor: 'rgba(76, 175, 80, 0.5)',
+              backgroundColor: 'rgba(76, 175, 80, 0.05)',
+              borderWidth: 2,
+              borderDash: [5, 5], // 점선
+              pointRadius: 3,
+              pointBackgroundColor: 'rgba(76, 175, 80, 0.5)',
+              tension: 0.1
+            },
+            {
+              label: '실제 데이터',
+              data: actualData,
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.1)',
+              borderWidth: 3,
+              pointRadius: 5,
+              pointBackgroundColor: '#4CAF50',
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2,
+              tension: 0.1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              labels: {
+                color: 'rgba(255, 255, 255, 0.7)',
+                font: { size: 12 },
+                usePointStyle: true,
+                padding: 15
+              }
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              titleColor: '#fff',
+              bodyColor: '#fff',
+              borderColor: '#4CAF50',
+              borderWidth: 1,
+              padding: 12,
+              displayColors: true
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                color: 'rgba(255, 255, 255, 0.05)',
+                drawBorder: false
+              },
+              ticks: {
+                color: 'rgba(255, 255, 255, 0.6)',
+                font: { size: 11 }
+              }
+            },
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(255, 255, 255, 0.05)',
+                drawBorder: false
+              },
+              ticks: {
+                color: 'rgba(255, 255, 255, 0.6)',
+                font: { size: 11 },
+                callback: function(value) {
+                  return value.toLocaleString() + '명';
+                }
+              }
+            }
+          },
+          interaction: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false
+          }
+        }
+      });
     }
 
     // ══════════════════════════════════════════════════════════════
