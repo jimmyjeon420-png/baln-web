@@ -1121,74 +1121,119 @@
         <div class="section-card" style="margin-top: 16px;">
           <div class="section-header">
             <span class="section-title">🗓 Phase 9-12 실행 계획</span>
+            <button onclick="refreshPhaseTasks()" style="background: var(--surface2); border: 1px solid var(--border); color: var(--text2); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">
+              🔄 새로고침
+            </button>
           </div>
           <div class="section-body">
             <div style="display: grid; gap: 16px;">
 
               <!-- Phase 9 -->
-              <div style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--green);">
+              <div class="phase-card" data-phase="9" style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--green); cursor: pointer;" onclick="togglePhaseDetails(9)">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                   <h3 style="font-size: 15px; color: var(--green);">Phase 9: 출시 준비</h3>
                   <span style="background: var(--green-dim); color: var(--green); padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">2월 3주차 (D-7)</span>
                 </div>
                 <p style="color: var(--text2); font-size: 13px; margin-bottom: 8px;"><strong>목표:</strong> TestFlight → App Store 제출</p>
-                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
-                  <li>5탭 → 3탭 전환 (app/(tabs)/_layout.tsx)</li>
-                  <li>"오늘" 탭 리디자인 (맥락 카드 UI 컴포넌트)</li>
-                  <li>온보딩 개선 (첫 자산 등록 → 첫 맥락 카드 경험)</li>
-                  <li>Premium 페이월 연결 (맥락 카드 4겹 중 2겹만 무료)</li>
-                  <li>iOS 빌드 → TestFlight 제출 → 내부 테스트 (3명 이상)</li>
-                </ul>
+
+                <!-- 진행률 바 -->
+                <div style="margin: 12px 0;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span id="phase-9-progress-text" style="font-size: 12px; color: var(--text2);">로딩 중...</span>
+                    <span id="phase-9-count" style="font-size: 12px; color: var(--text2);">-/-</span>
+                  </div>
+                  <div style="background: var(--surface); border-radius: 8px; height: 8px; overflow: hidden;">
+                    <div id="phase-9-progress-bar" style="background: var(--green); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+
+                <!-- 상세 체크리스트 (기본 숨김) -->
+                <div id="phase-9-details" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                  <ul id="phase-9-tasks" style="color: var(--text2); font-size: 13px; line-height: 2; padding-left: 20px; list-style: none;">
+                    <!-- 동적 로드 -->
+                  </ul>
+                </div>
               </div>
 
               <!-- Phase 10 -->
-              <div style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--blue);">
+              <div class="phase-card" data-phase="10" style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--blue); cursor: pointer;" onclick="togglePhaseDetails(10)">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                   <h3 style="font-size: 15px; color: var(--blue);">Phase 10: 리텐션 최적화</h3>
                   <span style="background: rgba(33, 150, 243, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">출시 후 1주일</span>
                 </div>
                 <p style="color: var(--text2); font-size: 13px; margin-bottom: 8px;"><strong>목표:</strong> D7 리텐션 40% 달성</p>
-                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
-                  <li>아침 7:30 푸시: "어제 예측 결과 + 오늘 맥락"</li>
-                  <li>3일 미접속 시: "시장이 -2% 급락했어요. 맥락 확인하세요"</li>
-                  <li>연속 기록 (스트릭): "7일 연속 출석 달성! +10C"</li>
-                  <li>같은 자산 구간 평균 건강 점수 계산</li>
-                  <li>"또래보다 +5점 높아요!" 넛지 카드</li>
-                  <li>복기 루프 강화: 어제 예측 vs 실제 결과 비교 UI</li>
-                </ul>
+
+                <!-- 진행률 바 -->
+                <div style="margin: 12px 0;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span id="phase-10-progress-text" style="font-size: 12px; color: var(--text2);">로딩 중...</span>
+                    <span id="phase-10-count" style="font-size: 12px; color: var(--text2);">-/-</span>
+                  </div>
+                  <div style="background: var(--surface); border-radius: 8px; height: 8px; overflow: hidden;">
+                    <div id="phase-10-progress-bar" style="background: var(--blue); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+
+                <!-- 상세 체크리스트 (기본 숨김) -->
+                <div id="phase-10-details" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                  <ul id="phase-10-tasks" style="color: var(--text2); font-size: 13px; line-height: 2; padding-left: 20px; list-style: none;">
+                    <!-- 동적 로드 -->
+                  </ul>
+                </div>
               </div>
 
               <!-- Phase 11 -->
-              <div style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--purple);">
+              <div class="phase-card" data-phase="11" style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--purple); cursor: pointer;" onclick="togglePhaseDetails(11)">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                   <h3 style="font-size: 15px; color: var(--purple);">Phase 11: 바이럴 루프</h3>
                   <span style="background: rgba(156, 39, 176, 0.15); color: var(--purple); padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">출시 후 2주</span>
                 </div>
                 <p style="color: var(--text2); font-size: 13px; margin-bottom: 8px;"><strong>목표:</strong> 자연 유입 50명/주</p>
-                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
-                  <li>건강 점수 카드 이미지 생성 (OG Image)</li>
-                  <li>카카오톡 공유 → 5C 보상</li>
-                  <li>공유 클릭 → 가입 추적</li>
-                  <li>초대 코드 생성</li>
-                  <li>친구 초대 → 양쪽 각 10C</li>
-                  <li>초대 리더보드 (상위 10명 Premium 1개월 무료)</li>
-                </ul>
+
+                <!-- 진행률 바 -->
+                <div style="margin: 12px 0;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span id="phase-11-progress-text" style="font-size: 12px; color: var(--text2);">로딩 중...</span>
+                    <span id="phase-11-count" style="font-size: 12px; color: var(--text2);">-/-</span>
+                  </div>
+                  <div style="background: var(--surface); border-radius: 8px; height: 8px; overflow: hidden;">
+                    <div id="phase-11-progress-bar" style="background: var(--purple); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+
+                <!-- 상세 체크리스트 (기본 숨김) -->
+                <div id="phase-11-details" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                  <ul id="phase-11-tasks" style="color: var(--text2); font-size: 13px; line-height: 2; padding-left: 20px; list-style: none;">
+                    <!-- 동적 로드 -->
+                  </ul>
+                </div>
               </div>
 
               <!-- Phase 12 -->
-              <div style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--yellow);">
+              <div class="phase-card" data-phase="12" style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--yellow); cursor: pointer;" onclick="togglePhaseDetails(12)">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                   <h3 style="font-size: 15px; color: var(--yellow);">Phase 12: Premium 전환</h3>
                   <span style="background: rgba(255, 193, 7, 0.15); color: var(--yellow); padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">출시 후 1개월</span>
                 </div>
                 <p style="color: var(--text2); font-size: 13px; margin-bottom: 8px;"><strong>목표:</strong> 무료→유료 전환율 5%</p>
-                <ul style="color: var(--text2); font-size: 13px; line-height: 1.8; padding-left: 20px;">
-                  <li>위기 전환: 시장 -3% 급락 시 "기관들은 뭘 하고 있을까?" → Premium 잠금</li>
-                  <li>손실 회피: "해지하면 27일 연속 기록 사라집니다" 경고</li>
-                  <li>가치 비교 화면: 무료 vs Premium (4겹 맥락, 3회 AI 진단 등)</li>
-                  <li>3일 체험권: 5C로 구매 가능</li>
-                  <li>가격 A/B 테스트: A그룹 ₩4,900/월 vs B그룹 ₩3,900/월 (첫 달 50% 할인)</li>
-                </ul>
+
+                <!-- 진행률 바 -->
+                <div style="margin: 12px 0;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span id="phase-12-progress-text" style="font-size: 12px; color: var(--text2);">로딩 중...</span>
+                    <span id="phase-12-count" style="font-size: 12px; color: var(--text2);">-/-</span>
+                  </div>
+                  <div style="background: var(--surface); border-radius: 8px; height: 8px; overflow: hidden;">
+                    <div id="phase-12-progress-bar" style="background: var(--yellow); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+
+                <!-- 상세 체크리스트 (기본 숨김) -->
+                <div id="phase-12-details" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                  <ul id="phase-12-tasks" style="color: var(--text2); font-size: 13px; line-height: 2; padding-left: 20px; list-style: none;">
+                    <!-- 동적 로드 -->
+                  </ul>
+                </div>
               </div>
 
             </div>
@@ -1342,6 +1387,64 @@
                   <li>매주 Analytics 리포트 확인</li>
                   <li>A/B 테스트 결과로만 의사결정</li>
                 </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- AI 개발 로드맵 추천 시스템 -->
+        <div class="section-card" style="margin-top: 16px;">
+          <div class="section-header">
+            <span class="section-title">🤖 AI 개발 로드맵 추천</span>
+            <span class="badge" style="background:var(--blue);margin-left:8px;">빅데이터 분석</span>
+            <button class="refresh-btn" onclick="loadAIRoadmap()" style="margin-left:auto;">↻ 재분석</button>
+          </div>
+          <div class="section-body">
+            <div style="display: grid; gap: 16px;">
+
+              <!-- 분석 요약 -->
+              <div id="ai-roadmap-summary" style="background: var(--surface2); padding: 16px; border-radius: 8px; border-left: 3px solid var(--blue);">
+                <div class="loading-overlay"><div class="spinner"></div> 데이터 분석 중...</div>
+              </div>
+
+              <!-- 다음 스프린트 추천 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">🎯 다음 주 우선 개발 과제 (AI 추천)</h3>
+                <div style="color: var(--text3); font-size: 12px; margin-bottom: 12px;">ROI = 예상 효과 ÷ 개발 기간</div>
+                <div id="ai-sprint-recommendations">
+                  <div class="loading-overlay"><div class="spinner"></div></div>
+                </div>
+              </div>
+
+              <!-- What-If 시뮬레이션 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">🔮 시나리오 시뮬레이션</h3>
+                <div style="margin-bottom: 16px;">
+                  <select id="ai-what-if-selector" onchange="runWhatIfSimulation()" style="width: 100%; padding: 10px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; font-size: 13px;">
+                    <option value="">시나리오를 선택하세요...</option>
+                    <option value="context_card">맥락 카드 개선을 먼저 한다면?</option>
+                    <option value="notification">알림 시스템을 먼저 구현한다면?</option>
+                    <option value="share">공유 기능을 먼저 만든다면?</option>
+                    <option value="premium">Premium 가치 비교를 먼저 개선한다면?</option>
+                    <option value="peer_compare">또래 비교 넛지를 먼저 추가한다면?</option>
+                    <option value="streak">연속 기록(스트릭)을 먼저 구현한다면?</option>
+                  </select>
+                </div>
+                <div id="ai-what-if-result" style="min-height: 100px;">
+                  <div style="color: var(--text3); font-size: 13px; text-align: center; padding: 20px;">시나리오를 선택하면 예상 효과를 보여드립니다</div>
+                </div>
+              </div>
+
+              <!-- 학습 피드백 -->
+              <div style="background: var(--surface2); padding: 16px; border-radius: 8px;">
+                <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text);">📚 AI 학습 현황</h3>
+                <div id="ai-learning-status">
+                  <div style="color: var(--text3); font-size: 13px;">기능 구현 후 실제 효과를 측정하여 AI 추천 정확도를 개선합니다</div>
+                  <div id="ai-prediction-accuracy" style="margin-top: 12px;">
+                    <!-- 예측 vs 실제 비교 데이터가 쌓이면 여기에 표시 -->
+                  </div>
+                </div>
               </div>
 
             </div>
@@ -2883,6 +2986,190 @@
         },
       };
     }
+
+    // ══════════════════════════════════════════════════════════════
+    // PHASE 9-12 작업 추적 시스템
+    // ══════════════════════════════════════════════════════════════
+
+    let phaseTasksCache = {};
+
+    async function loadPhaseTasks() {
+      try {
+        const { data, error } = await sb
+          .from('phase_tasks')
+          .select('*')
+          .order('phase_number', { ascending: true })
+          .order('priority', { ascending: false });
+
+        if (error) throw error;
+
+        // Phase별로 그룹화
+        phaseTasksCache = {};
+        data.forEach(task => {
+          if (!phaseTasksCache[task.phase_number]) {
+            phaseTasksCache[task.phase_number] = [];
+          }
+          phaseTasksCache[task.phase_number].push(task);
+        });
+
+        // 각 Phase의 진행률 업데이트
+        [9, 10, 11, 12].forEach(phaseNum => {
+          updatePhaseProgress(phaseNum);
+        });
+
+      } catch (err) {
+        console.error('Phase tasks 로드 실패:', err);
+        [9, 10, 11, 12].forEach(phaseNum => {
+          const progressText = document.getElementById(`phase-${phaseNum}-progress-text`);
+          const countText = document.getElementById(`phase-${phaseNum}-count`);
+          if (progressText) progressText.textContent = '데이터 로드 실패';
+          if (countText) countText.textContent = '-/-';
+        });
+      }
+    }
+
+    function updatePhaseProgress(phaseNum) {
+      const tasks = phaseTasksCache[phaseNum] || [];
+      const totalTasks = tasks.length;
+      const completedTasks = tasks.filter(t => t.status === 'completed').length;
+      const inProgressTasks = tasks.filter(t => t.status === 'in_progress').length;
+      const blockedTasks = tasks.filter(t => t.status === 'blocked').length;
+
+      const progress = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+      // 진행률 바 업데이트
+      const progressBar = document.getElementById(`phase-${phaseNum}-progress-bar`);
+      const progressText = document.getElementById(`phase-${phaseNum}-progress-text`);
+      const countText = document.getElementById(`phase-${phaseNum}-count`);
+
+      if (progressBar) progressBar.style.width = `${progress}%`;
+      if (countText) countText.textContent = `${completedTasks}/${totalTasks}`;
+
+      // 상태 텍스트
+      let statusText = `진행률 ${progress}%`;
+      if (blockedTasks > 0) {
+        statusText = `⚠️ ${blockedTasks}개 블로킹 중`;
+      } else if (inProgressTasks > 0) {
+        statusText = `🔄 ${inProgressTasks}개 진행 중`;
+      } else if (completedTasks === totalTasks && totalTasks > 0) {
+        statusText = '✅ 완료';
+      }
+
+      if (progressText) progressText.textContent = statusText;
+    }
+
+    function togglePhaseDetails(phaseNum) {
+      const detailsDiv = document.getElementById(`phase-${phaseNum}-details`);
+      const tasksList = document.getElementById(`phase-${phaseNum}-tasks`);
+
+      if (detailsDiv.style.display === 'none') {
+        // 상세 체크리스트 표시
+        detailsDiv.style.display = 'block';
+        renderPhaseTasks(phaseNum, tasksList);
+      } else {
+        // 숨기기
+        detailsDiv.style.display = 'none';
+      }
+    }
+
+    function renderPhaseTasks(phaseNum, tasksList) {
+      const tasks = phaseTasksCache[phaseNum] || [];
+
+      if (tasks.length === 0) {
+        tasksList.innerHTML = '<li style="color: var(--text3);">작업이 없습니다.</li>';
+        return;
+      }
+
+      tasksList.innerHTML = tasks.map(task => {
+        const statusIcon = {
+          'completed': '✅',
+          'in_progress': '🔄',
+          'blocked': '🚫',
+          'pending': '⬜'
+        }[task.status] || '⬜';
+
+        const statusColor = {
+          'completed': 'var(--green)',
+          'in_progress': 'var(--yellow)',
+          'blocked': 'var(--red)',
+          'pending': 'var(--text2)'
+        }[task.status] || 'var(--text2)';
+
+        const priorityBadge = task.priority === 2 ? '<span style="background: var(--red); color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 6px;">긴급</span>' :
+                               task.priority === 1 ? '<span style="background: var(--yellow); color: black; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 6px;">중요</span>' : '';
+
+        const blockingReason = task.status === 'blocked' && task.blocking_reason ?
+          `<div style="color: var(--red); font-size: 11px; margin-left: 24px; margin-top: 4px;">🚫 ${task.blocking_reason}</div>` : '';
+
+        const description = task.task_description ?
+          `<div style="color: var(--text3); font-size: 11px; margin-left: 24px;">${task.task_description}</div>` : '';
+
+        return `
+          <li style="margin-bottom: 12px; color: ${statusColor};">
+            <span onclick="cycleTaskStatus('${task.id}', ${phaseNum})" style="cursor: pointer; user-select: none;">
+              ${statusIcon} ${task.task_title}
+            </span>
+            ${priorityBadge}
+            ${description}
+            ${blockingReason}
+          </li>
+        `;
+      }).join('');
+    }
+
+    async function cycleTaskStatus(taskId, phaseNum) {
+      const tasks = phaseTasksCache[phaseNum] || [];
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+
+      // 상태 순환: pending → in_progress → completed → pending
+      const statusCycle = {
+        'pending': 'in_progress',
+        'in_progress': 'completed',
+        'completed': 'pending',
+        'blocked': 'pending'
+      };
+
+      const newStatus = statusCycle[task.status];
+
+      try {
+        const { error } = await sb
+          .from('phase_tasks')
+          .update({ status: newStatus })
+          .eq('id', taskId);
+
+        if (error) throw error;
+
+        // 캐시 업데이트
+        task.status = newStatus;
+
+        // UI 갱신
+        updatePhaseProgress(phaseNum);
+        const tasksList = document.getElementById(`phase-${phaseNum}-tasks`);
+        renderPhaseTasks(phaseNum, tasksList);
+
+      } catch (err) {
+        console.error('작업 상태 업데이트 실패:', err);
+        alert('작업 상태 업데이트에 실패했습니다.');
+      }
+    }
+
+    function refreshPhaseTasks() {
+      loadPhaseTasks();
+    }
+
+    // WBS 탭 활성화 시 Phase 작업 로드
+    document.addEventListener('DOMContentLoaded', () => {
+      const wbsTabBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn =>
+        btn.textContent.includes('WBS')
+      );
+
+      if (wbsTabBtn) {
+        wbsTabBtn.addEventListener('click', () => {
+          setTimeout(() => loadPhaseTasks(), 100);
+        });
+      }
+    });
   </script>
 </body>
 </html>
