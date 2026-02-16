@@ -697,41 +697,147 @@
       </div>
     </div>
 
-    <!-- Tab Navigation -->
+    <!-- Tab Navigation (이승건 버전: 3개만) -->
     <div class="tab-nav">
-      <button class="tab-btn active" data-tab="overview">Overview</button>
-      <button class="tab-btn" data-tab="users">유저 관리</button>
-      <button class="tab-btn" data-tab="credits">크레딧 경제</button>
-      <button class="tab-btn" data-tab="reports">신고 관리</button>
-      <button class="tab-btn" data-tab="lounge">라운지 관리</button>
-      <button class="tab-btn" data-tab="engagement">인게이지먼트</button>
-      <button class="tab-btn" data-tab="content">콘텐츠</button>
-      <button class="tab-btn" data-tab="analytics">분석</button>
-      <button class="tab-btn" data-tab="eventlog">이벤트 로그</button>
-      <button class="tab-btn" data-tab="wbs">📊 사업방향 WBS</button>
+      <button class="tab-btn active" data-tab="today">📊 오늘</button>
+      <button class="tab-btn" data-tab="manage">🛠️ 관리</button>
+      <button class="tab-btn" data-tab="settings">⚙️ 설정</button>
     </div>
 
     <div class="content">
 
-      <!-- ═══ TAB: OVERVIEW ═══ -->
-      <div class="tab-content active" id="tab-overview">
-        <div class="metrics-grid" id="overview-metrics">
-          <div class="loading-overlay"><div class="spinner"></div> 데이터 로딩 중...</div>
+      <!-- ═══ TAB: 오늘 (이승건 버전) ═══ -->
+      <div class="tab-content active" id="tab-today">
+
+        <!-- 긴급 액션 (문제 있을 때만 표시) -->
+        <div id="urgent-actions" style="margin-bottom: 24px;">
+          <!-- JavaScript로 동적 생성 -->
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-          <div class="section-card">
-            <div class="section-header"><span class="section-title">일별 가입자 추이</span></div>
-            <div class="section-body"><div class="chart-container"><canvas id="chart-signups"></canvas></div></div>
+        <!-- 오늘의 핵심 지표 -->
+        <div class="section-card">
+          <div class="section-header">
+            <span class="section-title">📈 오늘의 핵심 지표 <span id="today-date" style="color: var(--text3); font-size: 13px; font-weight: 400;"></span></span>
           </div>
-          <div class="section-card">
-            <div class="section-header"><span class="section-title">크레딧 흐름 (지급 vs 소비)</span></div>
-            <div class="section-body"><div class="chart-container"><canvas id="chart-credits"></canvas></div></div>
+          <div class="section-body">
+            <div class="metrics-grid" id="today-metrics">
+              <div class="loading-overlay"><div class="spinner"></div> 데이터 로딩 중...</div>
+            </div>
           </div>
         </div>
+
+        <!-- 6월 목표 달성률 (간소화) -->
+        <div class="section-card" style="margin-top: 16px;">
+          <div class="section-header">
+            <span class="section-title">🎯 6월 목표 달성률</span>
+            <button class="icon-btn" onclick="switchTab('manage')" title="상세 보기">
+              <span>📊 상세 →</span>
+            </button>
+          </div>
+          <div class="section-body">
+            <div id="goal-summary">
+              <!-- JavaScript로 동적 생성 -->
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- ═══ TAB: USERS ═══ -->
+      <!-- ═══ TAB: 관리 ═══ -->
+      <div class="tab-content" id="tab-manage">
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 24px;">
+
+          <!-- 콘텐츠 관리 -->
+          <div class="section-card" style="cursor: pointer;" onclick="showManageSection('content')">
+            <div class="section-header">
+              <span class="section-title">📰 콘텐츠 관리</span>
+            </div>
+            <div class="section-body">
+              <p style="color: var(--text2); font-size: 13px;">오늘의 맥락 카드, 투자 거장 인사이트, 예측 질문 관리</p>
+            </div>
+          </div>
+
+          <!-- 유저 관리 -->
+          <div class="section-card" style="cursor: pointer;" onclick="showManageSection('users')">
+            <div class="section-header">
+              <span class="section-title">👥 유저 관리</span>
+            </div>
+            <div class="section-body">
+              <p style="color: var(--text2); font-size: 13px;">유저 검색/조회, 크레딧 지급, 신고 처리</p>
+            </div>
+          </div>
+
+          <!-- 데이터 탐색 -->
+          <div class="section-card" style="cursor: pointer;" onclick="showManageSection('analytics')">
+            <div class="section-header">
+              <span class="section-title">📊 데이터 탐색</span>
+            </div>
+            <div class="section-body">
+              <p style="color: var(--text2); font-size: 13px;">사용자 행동 분석, 이벤트 로그, WBS</p>
+            </div>
+          </div>
+
+          <!-- 시스템 -->
+          <div class="section-card" style="cursor: pointer;" onclick="showManageSection('system')">
+            <div class="section-header">
+              <span class="section-title">🔧 시스템</span>
+            </div>
+            <div class="section-body">
+              <p style="color: var(--text2); font-size: 13px;">Edge Function 상태, API 모니터링, 수동 실행</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 각 섹션 상세 내용 (처음엔 숨김) -->
+        <div id="manage-detail-content">
+          <p style="color: var(--text3); text-align: center; padding: 40px;">위 카드를 클릭하여 관리 도구를 선택하세요</p>
+        </div>
+
+      </div>
+
+      <!-- ═══ TAB: 설정 ═══ -->
+      <div class="tab-content" id="tab-settings">
+
+        <div class="section-card">
+          <div class="section-header">
+            <span class="section-title">🔔 알림 설정</span>
+          </div>
+          <div class="section-body">
+            <p style="color: var(--text3); font-size: 13px; margin-bottom: 16px;">Phase 2에서 구현 예정 (Slack, 이메일 연동)</p>
+          </div>
+        </div>
+
+        <div class="section-card" style="margin-top: 16px;">
+          <div class="section-header">
+            <span class="section-title">🎯 목표 관리</span>
+          </div>
+          <div class="section-body">
+            <div style="margin-bottom: 16px;">
+              <label style="display: block; color: var(--text); font-size: 13px; margin-bottom: 4px;">6월 MAU 목표</label>
+              <input type="number" value="500" style="width: 120px; padding: 8px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 16px;">
+              <label style="display: block; color: var(--text); font-size: 13px; margin-bottom: 4px;">D7 리텐션 목표 (%)</label>
+              <input type="number" value="40" style="width: 120px; padding: 8px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px;">
+            </div>
+            <button class="action-btn" onclick="alert('목표 저장 기능은 Phase 2에서 구현됩니다')">저장</button>
+          </div>
+        </div>
+
+        <div class="section-card" style="margin-top: 16px;">
+          <div class="section-header">
+            <span class="section-title">🔐 계정</span>
+          </div>
+          <div class="section-body">
+            <button class="action-btn" onclick="if(confirm('로그아웃하시겠습니까?')) localStorage.clear(); location.reload();">로그아웃</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ═══ TAB: USERS (기존, 숨김) ═══ -->
       <div class="tab-content" id="tab-users">
         <div class="search-box">
           <input type="text" id="user-search" placeholder="이메일 또는 ID로 검색..." oninput="searchUsers(this.value)" />
@@ -1605,6 +1711,9 @@
 
     function loadTabData(tab) {
       switch(tab) {
+        case 'today': loadTodayDashboard(); break;
+        case 'manage': /* 카드 클릭 시 로드 */ break;
+        case 'settings': /* 설정은 정적 */ break;
         case 'users': loadUsers(); break;
         case 'credits': loadCredits(); break;
         case 'reports': loadReports(); break;
@@ -1615,6 +1724,221 @@
         case 'eventlog': loadEventLog(); break;
         case 'wbs': loadWBS(); break;
       }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // 오늘 탭 (이승건 버전)
+    // ══════════════════════════════════════════════════════════════
+
+    async function loadTodayDashboard() {
+      try {
+        // 날짜 표시
+        const today = new Date();
+        const days = ['일', '월', '화', '수', '목', '금', '토'];
+        document.getElementById('today-date').textContent =
+          `(${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')} ${days[today.getDay()]}요일)`;
+
+        // 긴급 액션 확인
+        await loadUrgentActions();
+
+        // 핵심 지표 로드
+        await loadTodayMetrics();
+
+        // 목표 달성률
+        await loadGoalSummary();
+
+      } catch (err) {
+        console.error('[오늘 탭] 로딩 실패:', err);
+      }
+    }
+
+    async function loadUrgentActions() {
+      const container = document.getElementById('urgent-actions');
+      const urgentItems = [];
+
+      // 1. 맥락 카드 승인 대기 확인 (Phase 2에서 구현)
+      // 2. 시스템 에러 확인
+      const { data: errorLogs } = await sb
+        .from('edge_function_logs')
+        .select('*')
+        .eq('status', 'FAILED')
+        .order('executed_at', { ascending: false })
+        .limit(5);
+
+      if (errorLogs && errorLogs.length > 0) {
+        const errorTask = errorLogs[0].task_name || '알 수 없음';
+        urgentItems.push(`
+          <div class="alert-banner warning" style="margin-bottom: 12px;">
+            <div class="alert-icon">🟡</div>
+            <div class="alert-content">
+              <div class="alert-title">시스템 에러 발생</div>
+              <div class="alert-message">${errorTask} 작업이 ${errorLogs.length}회 실패했습니다.</div>
+              <div class="alert-actions">
+                <button class="alert-action-btn" style="background: var(--yellow); color: black;" onclick="switchTab('manage'); showManageSection('system')">
+                  확인하기
+                </button>
+              </div>
+            </div>
+          </div>
+        `);
+      }
+
+      if (urgentItems.length === 0) {
+        container.innerHTML = `
+          <div class="alert-banner success">
+            <div class="alert-icon">✅</div>
+            <div class="alert-content">
+              <div class="alert-title">시스템 정상</div>
+              <div class="alert-message">모든 시스템이 정상 작동 중입니다.</div>
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = urgentItems.join('');
+      }
+    }
+
+    async function loadTodayMetrics() {
+      const metricsEl = document.getElementById('today-metrics');
+
+      // 병렬로 데이터 조회
+      const [
+        { count: totalUsers },
+        { count: activeToday },
+        { data: todaySignups },
+        { count: premiumUsers },
+      ] = await Promise.all([
+        sb.from('profiles').select('*', { count: 'exact', head: true }),
+        sb.from('analytics_events').select('user_id', { count: 'exact', head: true }).gte('created_at', new Date(new Date().setHours(0,0,0,0)).toISOString()),
+        sb.from('profiles').select('created_at').gte('created_at', new Date(new Date().setHours(0,0,0,0)).toISOString()),
+        sb.from('profiles').select('*', { count: 'exact', head: true }).neq('plan_type', 'free'),
+      ]);
+
+      const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+      const { count: yesterdayActive } = await sb
+        .from('analytics_events')
+        .select('user_id', { count: 'exact', head: true })
+        .gte('created_at', new Date(yesterday.setHours(0,0,0,0)).toISOString())
+        .lt('created_at', new Date(new Date().setHours(0,0,0,0)).toISOString());
+
+      const activeDiff = (activeToday || 0) - (yesterdayActive || 0);
+      const signupCount = todaySignups?.length || 0;
+
+      metricsEl.innerHTML = `
+        <div class="metric-card">
+          <div class="metric-label">신규 가입</div>
+          <div class="metric-value">${signupCount}명</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">활성 유저 (오늘)</div>
+          <div class="metric-value">${activeToday || 0}명 <span style="font-size: 14px; color: ${activeDiff >= 0 ? 'var(--green)' : 'var(--red)'};">${activeDiff >= 0 ? '↑' : '↓'}${Math.abs(activeDiff)}</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">전체 유저</div>
+          <div class="metric-value">${totalUsers || 0}명</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Premium 유저</div>
+          <div class="metric-value">${premiumUsers || 0}명</div>
+        </div>
+      `;
+    }
+
+    async function loadGoalSummary() {
+      const container = document.getElementById('goal-summary');
+
+      const { count: currentMAU } = await sb.from('profiles').select('*', { count: 'exact', head: true });
+      const targetMAU = 500;
+      const mauProgress = Math.min(100, (currentMAU / targetMAU * 100)).toFixed(1);
+
+      container.innerHTML = `
+        <div style="margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text); font-size: 14px; font-weight: 600;">MAU 500명</span>
+            <span style="color: var(--text2); font-size: 14px;">${currentMAU}/${targetMAU}명 (${mauProgress}%)</span>
+          </div>
+          <div style="background: var(--bg); height: 24px; border-radius: 12px; overflow: hidden;">
+            <div style="background: linear-gradient(90deg, var(--green), var(--blue)); height: 100%; width: ${mauProgress}%; transition: width 0.3s;"></div>
+          </div>
+        </div>
+        <p style="color: var(--text3); font-size: 13px; text-align: center;">
+          목표까지 ${targetMAU - currentMAU}명 필요
+        </p>
+      `;
+    }
+
+    function showManageSection(section) {
+      const detailContainer = document.getElementById('manage-detail-content');
+
+      switch(section) {
+        case 'content':
+          detailContainer.innerHTML = '<p style="color: var(--text3); text-align: center; padding: 40px;">콘텐츠 관리 기능은 Phase 2에서 구현됩니다</p>';
+          break;
+        case 'users':
+          switchTab('users');
+          break;
+        case 'analytics':
+          switchTab('wbs');
+          break;
+        case 'system':
+          detailContainer.innerHTML = `
+            <div class="section-card">
+              <div class="section-header">
+                <span class="section-title">🔧 시스템 상태</span>
+              </div>
+              <div class="section-body" id="system-status-detail">
+                <div class="loading-overlay"><div class="spinner"></div> 로딩 중...</div>
+              </div>
+            </div>
+          `;
+          loadSystemStatus();
+          break;
+      }
+    }
+
+    async function loadSystemStatus() {
+      const container = document.getElementById('system-status-detail');
+
+      const { data: logs } = await sb
+        .from('edge_function_logs')
+        .select('*')
+        .order('executed_at', { ascending: false })
+        .limit(20);
+
+      if (!logs || logs.length === 0) {
+        container.innerHTML = '<p style="color: var(--text3);">로그가 없습니다.</p>';
+        return;
+      }
+
+      // Task별 최근 상태 집계
+      const taskStatus = {};
+      logs.forEach(log => {
+        const task = log.task_name || 'unknown';
+        if (!taskStatus[task]) {
+          taskStatus[task] = { success: 0, failed: 0, latest: log };
+        }
+        if (log.status === 'SUCCESS') taskStatus[task].success++;
+        if (log.status === 'FAILED') taskStatus[task].failed++;
+      });
+
+      const statusHTML = Object.entries(taskStatus).map(([task, stat]) => {
+        const statusIcon = stat.failed === 0 ? '✅' : '❌';
+        const statusColor = stat.failed === 0 ? 'var(--green)' : 'var(--red)';
+        const lastTime = new Date(stat.latest.executed_at).toLocaleString('ko-KR');
+
+        return `
+          <div style="padding: 12px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="color: var(--text); font-size: 14px;">${statusIcon} Task ${task.toUpperCase()}</span>
+              <span style="color: ${statusColor}; font-size: 13px;">${stat.success}성공 / ${stat.failed}실패</span>
+            </div>
+            <div style="color: var(--text3); font-size: 11px; margin-top: 4px;">마지막 실행: ${lastTime}</div>
+            ${stat.latest.error_message ? `<div style="color: var(--red); font-size: 11px; margin-top: 4px;">에러: ${stat.latest.error_message}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = statusHTML || '<p style="color: var(--text3);">데이터 없음</p>';
     }
 
     // ══════════════════════════════════════════════════════════════
