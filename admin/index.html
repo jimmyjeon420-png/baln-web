@@ -2177,14 +2177,84 @@
     }
 
     async function regenerateContent(taskName) {
-      if (!confirm('이 콘텐츠를 다시 생성하시겠습니까? (Edge Function 실행, 1-2분 소요)')) return;
+      const taskLabels = {
+        'macro': '시장 온도계 (Task A)',
+        'market': '시장 온도계 (Task A)',
+        'gurus': '거장 인사이트 (Task C)',
+        'predictions': '예측 투표 (Task E)',
+        'context': '맥락 카드 (Task G)'
+      };
 
-      alert('🔄 재생성 중... (Phase 2에서 Edge Function 호출 구현 예정)\n\n현재는 수동으로 Supabase Function을 실행해주세요.');
+      const label = taskLabels[taskName] || taskName;
+      if (!confirm(`${label}를 다시 생성하시겠습니까?\n\nEdge Function 실행, 1-2분 소요됩니다.`)) return;
 
-      // Phase 2-2에서 구현:
-      // - Edge Function 특정 Task 호출 API
-      // - 진행 상태 표시
-      // - 완료 후 자동 새로고침
+      try {
+        // Task 매핑 (Edge Function Task Letter)
+        const taskMap = {
+          'macro': 'A',
+          'market': 'A',
+          'gurus': 'C',
+          'predictions': 'E',
+          'context': 'G'
+        };
+        const taskLetter = taskMap[taskName];
+        if (!taskLetter) {
+          throw new Error('알 수 없는 콘텐츠 타입: ' + taskName);
+        }
+
+        // Service Role Key 확인
+        const serviceRoleKey = localStorage.getItem('SUPABASE_SERVICE_ROLE_KEY');
+        if (!serviceRoleKey) {
+          throw new Error('Service Role Key가 없습니다. 설정 탭에서 키를 입력해주세요.');
+        }
+
+        // 로딩 상태 표시
+        const loadingMsg = document.createElement('div');
+        loadingMsg.className = 'alert-banner info';
+        loadingMsg.innerHTML = `
+          <div class="alert-title">🔄 ${label} 재생성 중...</div>
+          <div class="alert-desc">Edge Function 실행 중입니다. 1-2분 소요됩니다.</div>
+        `;
+        document.getElementById('manage-detail-content').prepend(loadingMsg);
+
+        // Edge Function 호출
+        const response = await fetch('https://ruqeinfcqhgexrckonsy.supabase.co/functions/v1/daily-briefing', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${serviceRoleKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            tasks: [taskLetter]
+          })
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Edge Function 실패 (${response.status}): ${errorText}`);
+        }
+
+        const result = await response.json();
+        console.log('[재생성 성공]:', result);
+
+        // 로딩 메시지 제거
+        loadingMsg.remove();
+
+        // 성공 메시지
+        alert(`✅ ${label} 재생성 완료!\n\n콘텐츠가 업데이트되었습니다. (draft 상태)`);
+
+        // 콘텐츠 새로고침
+        await loadTodayContent();
+        await loadTodayDashboard();
+
+      } catch (err) {
+        console.error('[재생성 실패]:', err);
+        alert(`❌ 재생성 실패: ${err.message}\n\n로그를 확인해주세요.`);
+
+        // 로딩 메시지 제거 (에러 시에도)
+        const loadingMsg = document.querySelector('.alert-banner.info');
+        if (loadingMsg) loadingMsg.remove();
+      }
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -2224,8 +2294,7 @@
 
     async function refreshAll() {
       document.getElementById('last-updated').textContent = `마지막 갱신: ${new Date().toLocaleTimeString('ko')}`;
-      tabDataLoaded = { overview: true };
-      await loadOverview();
+      await loadTodayDashboard();
     }
 
     // ══════════════════════════════════════════════════════════════
