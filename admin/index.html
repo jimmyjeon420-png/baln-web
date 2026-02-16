@@ -1755,8 +1755,48 @@
     async function loadUrgentActions() {
       const container = document.getElementById('urgent-actions');
       const urgentItems = [];
+      const today = new Date().toISOString().split('T')[0];
 
-      // 1. 맥락 카드 승인 대기 확인 (Phase 2에서 구현)
+      // 1. 맥락 카드 승인 대기 확인
+      const [contextCard, marketInsight] = await Promise.all([
+        sb.from('context_cards').select('*').eq('date', today).eq('publish_status', 'draft').single(),
+        sb.from('daily_market_insights').select('*').eq('date', today).eq('publish_status', 'draft').single(),
+      ]);
+
+      if (contextCard.data) {
+        urgentItems.push(`
+          <div class="alert-banner info" style="margin-bottom: 12px;">
+            <div class="alert-icon">📰</div>
+            <div class="alert-content">
+              <div class="alert-title">맥락 카드 승인 대기 중</div>
+              <div class="alert-message">오늘의 맥락 카드가 생성되었습니다. 검토 후 발행해주세요.</div>
+              <div class="alert-actions">
+                <button class="alert-action-btn" style="background: var(--blue); color: white;" onclick="switchTab('manage'); showManageSection('content')">
+                  미리보기
+                </button>
+              </div>
+            </div>
+          </div>
+        `);
+      }
+
+      if (marketInsight.data) {
+        urgentItems.push(`
+          <div class="alert-banner info" style="margin-bottom: 12px;">
+            <div class="alert-icon">🌡️</div>
+            <div class="alert-content">
+              <div class="alert-title">시장 온도 승인 대기 중</div>
+              <div class="alert-message">오늘의 시장 분석이 완료되었습니다.</div>
+              <div class="alert-actions">
+                <button class="alert-action-btn" style="background: var(--blue); color: white;" onclick="switchTab('manage'); showManageSection('content')">
+                  확인하기
+                </button>
+              </div>
+            </div>
+          </div>
+        `);
+      }
+
       // 2. 시스템 에러 확인
       const { data: errorLogs } = await sb
         .from('edge_function_logs')
@@ -1872,7 +1912,20 @@
 
       switch(section) {
         case 'content':
-          detailContainer.innerHTML = '<p style="color: var(--text3); text-align: center; padding: 40px;">콘텐츠 관리 기능은 Phase 2에서 구현됩니다</p>';
+          detailContainer.innerHTML = `
+            <div class="section-card">
+              <div class="section-header">
+                <span class="section-title">📰 오늘의 콘텐츠 관리</span>
+                <button class="icon-btn" onclick="loadTodayContent()" title="새로고침">
+                  <span>🔄</span>
+                </button>
+              </div>
+              <div class="section-body" id="content-management-detail">
+                <div class="loading-overlay"><div class="spinner"></div> 로딩 중...</div>
+              </div>
+            </div>
+          `;
+          loadTodayContent();
           break;
         case 'users':
           switchTab('users');
@@ -1939,6 +1992,199 @@
       }).join('');
 
       container.innerHTML = statusHTML || '<p style="color: var(--text3);">데이터 없음</p>';
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // 콘텐츠 관리 (Phase 2)
+    // ══════════════════════════════════════════════════════════════
+
+    async function loadTodayContent() {
+      const container = document.getElementById('content-management-detail');
+      const today = new Date().toISOString().split('T')[0];
+
+      try {
+        // 병렬로 오늘의 콘텐츠 조회
+        const [marketInsights, guruInsights, predictionPolls, contextCards] = await Promise.all([
+          sb.from('daily_market_insights').select('*').eq('date', today).single(),
+          sb.from('guru_insights').select('*').eq('date', today).limit(10),
+          sb.from('prediction_polls').select('*').eq('created_date', today).limit(5),
+          sb.from('context_cards').select('*').eq('date', today).single(),
+        ]);
+
+        const sections = [];
+
+        // 1. 시장 온도 & 거시경제
+        if (marketInsights.data) {
+          const data = marketInsights.data;
+          const isDraft = data.publish_status === 'draft';
+          sections.push(`
+            <div class="section-card" style="margin-bottom: 16px; border-left: 3px solid ${isDraft ? 'var(--yellow)' : 'var(--green)'};">
+              <div class="section-header">
+                <span class="section-title">🌡️ 시장 온도 ${isDraft ? '⏸️ 임시' : '✅ 발행됨'}</span>
+              </div>
+              <div class="section-body">
+                <div style="margin-bottom: 12px;">
+                  <strong style="color: var(--text); font-size: 15px;">"${data.cfo_weather?.status || '데이터 없음'}"</strong>
+                  <p style="color: var(--text2); font-size: 13px; margin-top: 4px;">${data.cfo_weather?.message || ''}</p>
+                </div>
+                <div style="margin-bottom: 12px;">
+                  <div style="color: var(--text3); font-size: 12px; margin-bottom: 4px;">거시경제 요약:</div>
+                  <ul style="color: var(--text2); font-size: 13px; margin-left: 20px;">
+                    ${data.macro_summary?.highlights?.map(h => `<li>${h}</li>`).join('') || '<li>데이터 없음</li>'}
+                  </ul>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  ${isDraft ? '<button class="action-btn" style="background: var(--green);" onclick="publishContent(\'market\', \'' + data.date + '\')">✅ 발행하기</button>' : '<button class="action-btn" style="background: var(--surface2);" disabled>발행됨</button>'}
+                  <button class="action-btn" onclick="regenerateContent('macro')">🔄 재생성</button>
+                </div>
+              </div>
+            </div>
+          `);
+        }
+
+        // 2. 투자 거장 인사이트
+        if (guruInsights.data && guruInsights.data.length > 0) {
+          const firstGuru = guruInsights.data[0];
+          const isDraft = firstGuru.publish_status === 'draft';
+          sections.push(`
+            <div class="section-card" style="margin-bottom: 16px; border-left: 3px solid ${isDraft ? 'var(--yellow)' : 'var(--green)'};">
+              <div class="section-header">
+                <span class="section-title">🎓 투자 거장 인사이트 (${guruInsights.data.length}개) ${isDraft ? '⏸️ 임시' : '✅ 발행됨'}</span>
+              </div>
+              <div class="section-body">
+                ${guruInsights.data.slice(0, 3).map(guru => `
+                  <div style="padding: 8px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px;">
+                    <div style="color: var(--text); font-size: 13px; font-weight: 600;">${guru.guru_name} (${guru.organization})</div>
+                    <div style="color: var(--text2); font-size: 12px; margin-top: 4px;">"${guru.insight_text || '인사이트 없음'}"</div>
+                  </div>
+                `).join('')}
+                <div style="display: flex; gap: 8px; margin-top: 12px;">
+                  ${isDraft ? '<button class="action-btn" style="background: var(--green);" onclick="publishContent(\'gurus\', \'' + today + '\')">✅ 발행하기</button>' : '<button class="action-btn" style="background: var(--surface2);" disabled>발행됨</button>'}
+                  <button class="action-btn" onclick="regenerateContent('gurus')">🔄 재생성</button>
+                </div>
+              </div>
+            </div>
+          `);
+        }
+
+        // 3. 예측 질문
+        if (predictionPolls.data && predictionPolls.data.length > 0) {
+          const firstPoll = predictionPolls.data[0];
+          const isDraft = firstPoll.publish_status === 'draft';
+          sections.push(`
+            <div class="section-card" style="margin-bottom: 16px; border-left: 3px solid ${isDraft ? 'var(--yellow)' : 'var(--green)'};">
+              <div class="section-header">
+                <span class="section-title">🎯 오늘의 예측 질문 (${predictionPolls.data.length}개) ${isDraft ? '⏸️ 임시' : '✅ 발행됨'}</span>
+              </div>
+              <div class="section-body">
+                ${predictionPolls.data.map((poll, idx) => `
+                  <div style="padding: 8px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px;">
+                    <div style="color: var(--text); font-size: 13px; font-weight: 600;">Q${idx + 1}. ${poll.question_text}</div>
+                    <div style="color: var(--text3); font-size: 11px; margin-top: 4px;">카테고리: ${poll.category || '일반'}</div>
+                  </div>
+                `).join('')}
+                <div style="display: flex; gap: 8px; margin-top: 12px;">
+                  ${isDraft ? '<button class="action-btn" style="background: var(--green);" onclick="publishContent(\'predictions\', \'' + today + '\')">✅ 발행하기</button>' : '<button class="action-btn" style="background: var(--surface2);" disabled>발행됨</button>'}
+                  <button class="action-btn" onclick="regenerateContent('predictions')">🔄 재생성</button>
+                </div>
+              </div>
+            </div>
+          `);
+        }
+
+        // 4. 맥락 카드 (킬링 피처)
+        if (contextCards.data) {
+          const data = contextCards.data;
+          const isDraft = data.publish_status === 'draft';
+          sections.push(`
+            <div class="section-card" style="margin-bottom: 16px; border: 2px solid ${isDraft ? 'var(--yellow)' : 'var(--green)'};">
+              <div class="section-header">
+                <span class="section-title">🔥 맥락 카드 (킬링 피처) ${isDraft ? '⏸️ 임시' : '✅ 발행됨'}</span>
+              </div>
+              <div class="section-body">
+                <div style="margin-bottom: 12px;">
+                  <div style="color: var(--blue); font-size: 12px; font-weight: 600; margin-bottom: 4px;">[1겹] 역사적 맥락</div>
+                  <p style="color: var(--text2); font-size: 13px;">${data.layer_1_historical || '데이터 없음'}</p>
+                </div>
+                <div style="margin-bottom: 12px;">
+                  <div style="color: var(--blue); font-size: 12px; font-weight: 600; margin-bottom: 4px;">[2겹] 거시경제 체인</div>
+                  <p style="color: var(--text2); font-size: 13px;">${data.layer_2_macro_chain || '데이터 없음'}</p>
+                </div>
+                <div style="margin-bottom: 12px;">
+                  <div style="color: var(--blue); font-size: 12px; font-weight: 600; margin-bottom: 4px;">[3겹] 기관 행동</div>
+                  <p style="color: var(--text2); font-size: 13px;">${data.layer_3_institution || '데이터 없음'}</p>
+                </div>
+                <div style="margin-bottom: 12px;">
+                  <div style="color: var(--blue); font-size: 12px; font-weight: 600; margin-bottom: 4px;">[4겹] 내 포트폴리오 영향</div>
+                  <p style="color: var(--text2); font-size: 13px;">${data.layer_4_portfolio || '데이터 없음'}</p>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 16px;">
+                  ${isDraft ? '<button class="action-btn" style="background: var(--green); font-size: 14px; font-weight: 600;" onclick="publishContent(\'context\', \'' + data.date + '\')">✅ 유저에게 보내기</button>' : '<button class="action-btn" style="background: var(--surface2);" disabled>발행됨</button>'}
+                  <button class="action-btn" onclick="regenerateContent('context')">🔄 다시 쓰기</button>
+                </div>
+              </div>
+            </div>
+          `);
+        }
+
+        if (sections.length === 0) {
+          container.innerHTML = '<p style="color: var(--text3); text-align: center; padding: 40px;">오늘의 콘텐츠가 아직 생성되지 않았습니다.</p>';
+        } else {
+          container.innerHTML = sections.join('');
+        }
+
+      } catch (err) {
+        console.error('[콘텐츠 관리] 로딩 실패:', err);
+        container.innerHTML = `<p style="color: var(--red);">로딩 실패: ${err.message}</p>`;
+      }
+    }
+
+    async function publishContent(type, date) {
+      if (!confirm('이 콘텐츠를 발행하시겠습니까? 사용자 앱에 즉시 표시됩니다.')) return;
+
+      try {
+        let tableName, result;
+
+        switch(type) {
+          case 'market':
+            tableName = 'daily_market_insights';
+            result = await sb.from(tableName).update({ publish_status: 'published' }).eq('date', date);
+            break;
+          case 'gurus':
+            tableName = 'guru_insights';
+            result = await sb.from(tableName).update({ publish_status: 'published' }).eq('date', date);
+            break;
+          case 'predictions':
+            tableName = 'prediction_polls';
+            result = await sb.from(tableName).update({ publish_status: 'published' }).eq('created_date', date);
+            break;
+          case 'context':
+            tableName = 'context_cards';
+            result = await sb.from(tableName).update({ publish_status: 'published' }).eq('date', date);
+            break;
+        }
+
+        if (result.error) throw result.error;
+
+        alert('✅ 발행 완료! 사용자 앱에 표시됩니다.');
+        loadTodayContent(); // 새로고침
+        loadTodayDashboard(); // 오늘 탭도 업데이트
+
+      } catch (err) {
+        console.error('[발행 실패]:', err);
+        alert('❌ 발행 실패: ' + err.message);
+      }
+    }
+
+    async function regenerateContent(taskName) {
+      if (!confirm('이 콘텐츠를 다시 생성하시겠습니까? (Edge Function 실행, 1-2분 소요)')) return;
+
+      alert('🔄 재생성 중... (Phase 2에서 Edge Function 호출 구현 예정)\n\n현재는 수동으로 Supabase Function을 실행해주세요.');
+
+      // Phase 2-2에서 구현:
+      // - Edge Function 특정 Task 호출 API
+      // - 진행 상태 표시
+      // - 완료 후 자동 새로고침
     }
 
     // ══════════════════════════════════════════════════════════════
