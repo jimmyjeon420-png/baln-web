@@ -3508,10 +3508,17 @@
 
       if (wbsTabBtn) {
         wbsTabBtn.addEventListener('click', () => {
-          setTimeout(() => loadPhaseTasks(), 100);
+          setTimeout(() => {
+            loadPhaseTasks();
+            if (typeof loadAIRoadmap === 'function') loadAIRoadmap();
+          }, 100);
         });
       }
     });
   </script>
+
+  <!-- AI 로드맵 & 철학 추천 시스템 -->
+  <script src="ai-roadmap.js"></script>
+  <script src="philosophy-recommender.js"></script>
 </body>
 </html>

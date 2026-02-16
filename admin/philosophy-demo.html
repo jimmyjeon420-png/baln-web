@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>철학 기반 AI 추천 시스템 데모</title>
+  <style>
+    :root {
+      --bg: #0A0E27;
+      --surface: #141B2D;
+      --surface2: #1E293B;
+      --text: #F1F5F9;
+      --text2: #CBD5E1;
+      --text3: #94A3B8;
+      --green: #4CAF50;
+      --blue: #2196F3;
+      --yellow: #FFC107;
+      --red: #CF6679;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 32px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .controls {
+      background: var(--surface2);
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+    }
+
+    .metric-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-group label {
+      color: var(--text2);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .input-group input {
+      background: var(--bg);
+      border: 2px solid var(--surface);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--green);
+    }
+
+    button {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #results {
+      min-height: 200px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 64px 32px;
+      color: var(--text3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 철학 기반 AI 추천 시스템</h1>
+    <p style="color: var(--text2); margin-bottom: 32px;">
+      이승건, 레이 달리오, 워렌 버핏의 철학을 기반으로 개발 우선순위를 추천합니다.
+    </p>
+
+    <div class="controls">
+      <h2 style="font-size: 18px; margin-bottom: 16px; color: var(--text);">
+        📊 현재 지표 입력
+      </h2>
+
+      <div class="metric-inputs">
+        <div class="input-group">
+          <label>D7 리텐션 (%)</label>
+          <input type="number" id="d7Retention" value="35" min="0" max="100">
+        </div>
+
+        <div class="input-group">
+          <label>유료 전환율 (%)</label>
+          <input type="number" id="conversionRate" value="4.5" min="0" max="100" step="0.1">
+        </div>
+
+        <div class="input-group">
+          <label>현재 MAU</label>
+          <input type="number" id="currentMAU" value="50" min="0">
+        </div>
+
+        <div class="input-group">
+          <label>목표 MAU</label>
+          <input type="number" id="targetMAU" value="2000" min="0">
+        </div>
+      </div>
+
+      <button onclick="generateRecommendations()">
+        🚀 추천 생성
+      </button>
+    </div>
+
+    <div id="results">
+      <div class="empty-state">
+        <div style="font-size: 48px; margin-bottom: 16px;">🎯</div>
+        <div style="font-size: 16px; color: var(--text2);">
+          위에서 현재 지표를 입력하고 "추천 생성" 버튼을 클릭하세요.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="philosophy-recommender.js"></script>
+  <script>
+    function generateRecommendations() {
+      const metrics = {
+        d7Retention: parseFloat(document.getElementById('d7Retention').value),
+        conversionRate: parseFloat(document.getElementById('conversionRate').value),
+        currentMAU: parseInt(document.getElementById('currentMAU').value),
+        targetMAU: parseInt(document.getElementById('targetMAU').value)
+      };
+
+      // 추천 생성
+      const html = renderRecommendations(metrics);
+      document.getElementById('results').innerHTML = html;
+
+      // 부드러운 스크롤
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 페이지 로드 시 자동 생성 (데모용)
+    window.addEventListener('load', () => {
+      setTimeout(generateRecommendations, 500);
+    });
+  </script>
+</body>
+</html>
