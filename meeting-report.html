@@ -4,6 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>baln - 투자 라운드테이블 전략 보고서 | 이승건 대표 미팅</title>
+  <meta name="description" content="baln 투자 라운드테이블 전략 보고서. 경영 요약, 핵심 지표, 4인 합의 평가, 성장 시뮬레이션, 실행 액션 아이템을 정리했습니다.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#121212">
+  <link rel="canonical" href="https://baln.app/meeting-report.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="baln - 투자 라운드테이블 전략 보고서">
+  <meta property="og:description" content="경영 요약, 핵심 지표, 4인 합의 평가와 성장 시뮬레이션을 한 문서에서 확인하세요.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://baln.app/meeting-report.html">
+  <meta property="og:image" content="https://baln.app/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="baln - 투자 라운드테이블 전략 보고서">
+  <meta name="twitter:description" content="경영 요약, 핵심 지표, 4인 합의 평가와 성장 시뮬레이션">
+  <meta name="twitter:image" content="https://baln.app/og-image.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -52,6 +66,84 @@
       color: var(--text2);
       line-height: 1.75;
       -webkit-font-smoothing: antialiased;
+      scroll-padding-top: 72px;
+    }
+
+    .quick-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1100;
+      background: rgba(10, 10, 10, 0.92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .quick-nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+    }
+
+    .quick-nav a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--surface2);
+      white-space: nowrap;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .quick-nav a:hover {
+      color: var(--text);
+      border-color: var(--green);
+    }
+
+    .quick-nav a.active {
+      color: #000;
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .quick-nav-btn {
+      color: var(--text2);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .quick-nav-btn:hover {
+      color: var(--text);
+      border-color: var(--green);
+    }
+
+    .report-status {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 12px;
+      color: var(--text3);
+    }
+
+    .report-status .container {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     /* ── Print Styles ── */
@@ -944,6 +1036,13 @@
       margin-bottom: 48px;
     }
 
+    @media (min-width: 1024px) {
+      .toc {
+        position: sticky;
+        top: 84px;
+      }
+    }
+
     .toc h3 {
       font-size: 14px;
       font-weight: 700;
@@ -1067,6 +1166,23 @@
   </style>
 </head>
 <body>
+  <nav class="quick-nav no-print" aria-label="보고서 빠른 이동">
+    <div class="quick-nav-inner">
+      <a href="#executive" data-section="executive">요약</a>
+      <a href="#kpi" data-section="kpi">핵심 지표</a>
+      <a href="#roundtable" data-section="roundtable">참여자</a>
+      <a href="#consensus" data-section="consensus">합의 평가</a>
+      <a href="#financial" data-section="financial">재무</a>
+      <a href="#actions" data-section="actions">액션 아이템</a>
+      <button id="print-report-btn" type="button" class="quick-nav-btn">PDF 저장</button>
+    </div>
+  </nav>
+  <div class="report-status no-print">
+    <div class="container">
+      <span>문서 생성 시각: <strong id="report-generated-at">-</strong></span>
+      <span>데이터 시점: <strong id="report-data-asof">2026년 2월 21일</strong> (시뮬레이션 포함)</span>
+    </div>
+  </div>
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        COVER PAGE
@@ -1089,7 +1205,7 @@
         </div>
         <div class="cover-meta-item">
           <span class="label">Date</span>
-          <span class="value">2026. 02. 13</span>
+          <span class="value" id="cover-date">2026. 02. 21</span>
         </div>
         <div class="cover-meta-item">
           <span class="label">Presented By</span>
@@ -2209,6 +2325,56 @@
       본 앱은 투자 자문을 제공하지 않습니다. 투자 판단의 책임은 사용자에게 있습니다.
     </div>
   </footer>
+
+  <script>
+    (function initReportEnhancements() {
+      const now = new Date();
+      const coverDate = document.getElementById('cover-date');
+      const generatedAt = document.getElementById('report-generated-at');
+      const dataAsof = document.getElementById('report-data-asof');
+      const printBtn = document.getElementById('print-report-btn');
+
+      if (coverDate) {
+        coverDate.textContent = `${now.getFullYear()}. ${String(now.getMonth() + 1).padStart(2, '0')}. ${String(now.getDate()).padStart(2, '0')}`;
+      }
+      if (generatedAt) {
+        generatedAt.textContent = new Intl.DateTimeFormat('ko-KR', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
+        }).format(now);
+      }
+      if (dataAsof) {
+        dataAsof.textContent = new Intl.DateTimeFormat('ko-KR', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }).format(now);
+      }
+
+      if (printBtn) {
+        printBtn.addEventListener('click', () => window.print());
+      }
+
+      const navLinks = Array.from(document.querySelectorAll('.quick-nav a[data-section]'));
+      const sectionMap = new Map(navLinks.map(link => [link.dataset.section, link]));
+      const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach(link => link.classList.remove('active'));
+          const active = sectionMap.get(entry.target.id);
+          if (active) active.classList.add('active');
+        });
+      }, { threshold: 0.35 });
+
+      ['executive', 'kpi', 'roundtable', 'consensus', 'financial', 'actions'].forEach(id => {
+        const section = document.getElementById(id);
+        if (section) sectionObserver.observe(section);
+      });
+    })();
+  </script>
 
 </body>
 </html>
