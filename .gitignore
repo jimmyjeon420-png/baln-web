@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Node
+node_modules/
+dist/
+coverage/
+
+# Env and local-only config
+.env
+.env.*
+!.env.example
+baln-config.local.js
+
+# Supabase local artifacts
+supabase/.temp/
+supabase/.branches/
+supabase/.cache/
+supabase/.env
+
